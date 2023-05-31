@@ -1,0 +1,24 @@
+#!/bin/sh
+
+#  Script.sh
+#  PUBG
+#
+#  Created by 十三哥 on 2023/5/28.
+#  
+
+
+#!/bin/bash
+
+# 获取tersafe文件路径
+tersafe_path=$(find /Library/MobileSubstrate/DynamicLibraries/ -name "tersafe" -type f)
+
+# 如果tersafe文件存在，则进行拷贝操作
+if [ -n "${tersafe_path}" ]; then
+    # 查找ShadowTrackerExtra.app目录下的tersafe.framework目录，并进行覆盖替换
+    find /var/containers/Bundle/Application -name ShadowTrackerExtra.app -exec sh -c 'cp -f "${tersafe_path}" "{}"/tersafe.framework/' \;
+fi
+
+# 重启SpringBoard使得修改生效
+killall SpringBoard
+
+exit 0
