@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		606630872A246FD5005BE656 /* PUBGDataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 606630852A246FD5005BE656 /* PUBGDataModel.h */; };
-		606630882A246FD5005BE656 /* PUBGDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 606630862A246FD5005BE656 /* PUBGDataModel.m */; };
 		6066AC0A29F82CD0008273C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6066AC0929F82CD0008273C2 /* UIKit.framework */; };
 		6066AC0C29F82CD0008273C2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6066AC0B29F82CD0008273C2 /* Foundation.framework */; };
 		6066AC1729F82CD0008273C2 /* Ding.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6066AC1629F82CD0008273C2 /* Ding.mm */; };
 		6066AC2E29F82DBD008273C2 /* CydiaSubstrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6066AC2D29F82DBD008273C2 /* CydiaSubstrate.framework */; };
 		609570A32A27528100E12BEA /* ESP.h in Headers */ = {isa = PBXBuildFile; fileRef = 609570A12A27528100E12BEA /* ESP.h */; };
 		609570A42A27528100E12BEA /* ESP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 609570A22A27528100E12BEA /* ESP.mm */; };
+		609570B62A29ECAE00E12BEA /* PUBGDataModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 609570B52A29ECAE00E12BEA /* PUBGDataModel.mm */; };
 		60D75A0F2A23C83300022BD4 /* NSTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 60D75A0E2A23C83300022BD4 /* NSTask.h */; };
 		60D8697B29F83187007433D4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D8697A29F83187007433D4 /* CoreGraphics.framework */; };
 		60D8697D29F8318B007433D4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D8697C29F8318B007433D4 /* QuartzCore.framework */; };
@@ -87,7 +87,6 @@
 
 /* Begin PBXFileReference section */
 		606630852A246FD5005BE656 /* PUBGDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PUBGDataModel.h; sourceTree = "<group>"; };
-		606630862A246FD5005BE656 /* PUBGDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PUBGDataModel.m; sourceTree = "<group>"; };
 		6066AC0629F82CD0008273C2 /* PUBG.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = PUBG.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		6066AC0929F82CD0008273C2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6066AC0B29F82CD0008273C2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -98,6 +97,7 @@
 		6066AC2D29F82DBD008273C2 /* CydiaSubstrate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CydiaSubstrate.framework; sourceTree = "<group>"; };
 		609570A12A27528100E12BEA /* ESP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESP.h; sourceTree = "<group>"; };
 		609570A22A27528100E12BEA /* ESP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ESP.mm; sourceTree = "<group>"; };
+		609570B52A29ECAE00E12BEA /* PUBGDataModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PUBGDataModel.mm; sourceTree = "<group>"; };
 		60D75A0D2A2382DB00022BD4 /* postinst */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = postinst; sourceTree = "<group>"; };
 		60D75A0E2A23C83300022BD4 /* NSTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTask.h; sourceTree = "<group>"; };
 		60D8697A29F83187007433D4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -317,7 +317,7 @@
 				60E55F572A21CB1F0078ED9C /* gameVM.mm */,
 				6066AC1029F82CD0008273C2 /* Package */,
 				606630852A246FD5005BE656 /* PUBGDataModel.h */,
-				606630862A246FD5005BE656 /* PUBGDataModel.m */,
+				609570B52A29ECAE00E12BEA /* PUBGDataModel.mm */,
 				60E55F552A21CB1E0078ED9C /* PUBGTypeHeader.h */,
 			);
 			path = PUBG;
@@ -520,8 +520,8 @@
 				60E55F952A21CBA70078ED9C /* Config.m in Sources */,
 				60E55FAA2A21CBA70078ED9C /* AFNetworkReachabilityManager.m in Sources */,
 				60E55EE42A20BA0D0078ED9C /* PubgLoad.mm in Sources */,
-				606630882A246FD5005BE656 /* PUBGDataModel.m in Sources */,
 				60E55F882A21CBA70078ED9C /* MBProgressHUD.m in Sources */,
+				609570B62A29ECAE00E12BEA /* PUBGDataModel.mm in Sources */,
 				60E55F9A2A21CBA70078ED9C /* NSString+MD5.m in Sources */,
 				60E55FA82A21CBA70078ED9C /* AFURLRequestSerialization.m in Sources */,
 				60E55F962A21CBA70078ED9C /* MF_Base64Additions.m in Sources */,
@@ -617,7 +617,7 @@
 				MonkeyDevBuildPackageOnAnyBuild = YES;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
-				MonkeyDevDeviceIP = 192.168.1.5;
+				MonkeyDevDeviceIP = 192.168.1.3;
 				MonkeyDevDevicePassword = alpine;
 				MonkeyDevDevicePort = 22;
 				MonkeyDevInstallOnAnyBuild = YES;
@@ -652,7 +652,7 @@
 				MonkeyDevBuildPackageOnAnyBuild = YES;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
-				MonkeyDevDeviceIP = 192.168.1.5;
+				MonkeyDevDeviceIP = 192.168.1.3;
 				MonkeyDevDevicePassword = alpine;
 				MonkeyDevDevicePort = 22;
 				MonkeyDevInstallOnAnyBuild = YES;

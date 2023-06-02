@@ -53,29 +53,31 @@ bool MenDeal;
     float 最新音量 = [[[notification userInfo] objectForKey:@"AVSystemController_AudioVolumeNotificationParameter"] floatValue];
     if (初始音量!=最新音量) {
         初始音量=最新音量;
-        [self volumeChanged];
+        MenDeal = !MenDeal;
+        if (getGame()){
+            [self volumeChanged];
+        }else{
+            MenDeal=false;
+            绘制总开关=false;
+        }
+        
     }
     NSLog(@"Current volume: %f", 最新音量);
 }
 
 - (void)volumeChanged {
-    MenDeal = !MenDeal;
-    if (getGame()) {
-        //移除已经添加到窗口中的 ImGuiMem 实例
-        [[ImGuiMem sharedInstance] removeFromSuperview];
-        //根据 MenDeal 的值添加新的 ImGuiMem 实例
-        if (MenDeal) {
-            [[ShiSnGeWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
-        } else {
-            [[YMUIWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
-        }
-        [ImGuiMem sharedInstance].userInteractionEnabled = MenDeal;
-
-        
-    }else{
-        绘制总开关=false;
+    //移除已经添加到窗口中的 ImGuiMem 实例
+    [[ImGuiMem sharedInstance] removeFromSuperview];
+    //根据 MenDeal 的值添加新的 ImGuiMem 实例
+    if (MenDeal) {
+        [[ShiSnGeWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
+    } else {
+        [[YMUIWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
     }
-    
+    [ImGuiMem sharedInstance].userInteractionEnabled = MenDeal;
+    [NSObject YzCode:^{
+        
+    }];
 }
 
 

@@ -145,6 +145,7 @@
 #pragma mark - IMGUI菜单
 char 输入框内容[256] = "";
 static bool 全选;
+static bool 全选绘制;
 static bool 一次调用;
 - (void)Drawing:(ImDrawList*)drawList
 {
@@ -227,6 +228,14 @@ static bool 一次调用;
                 
                 // 在这里添加第一个选项卡的内容
                 ImGui::Checkbox("信息背景", &背景开关);
+                if(ImGui::Checkbox("全选绘制", &全选绘制)){
+                    射线开关=全选绘制;
+                    血条开关=全选绘制;
+                    骨骼开关=全选绘制;
+                    名字开关=全选绘制;
+                    距离开关=全选绘制;
+                    
+                }
                 ImGui::Checkbox("射线", &射线开关);
                 ImGui::SameLine();
                 ImGui::ColorEdit4("射线颜色", (float*) &射线颜色);
@@ -257,11 +266,11 @@ static bool 一次调用;
             if (ImGui::BeginTabItem("物资绘制")) // 开始第二个选项卡
             {
                 // 在这里添加第二个选项卡的内容
-                ImGui::Checkbox("总开关", &物资总开关);
+                ImGui::Checkbox("物资总开关", &物资总开关);
                 ImGui::SameLine();
                 ImGui::Checkbox("手雷预警", &手雷预警开关);
                 ImGui::SameLine();
-                if(ImGui::Checkbox("全选", &全选)){
+                if(ImGui::Checkbox("全选物资", &全选)){
                     手持武器开关=全选;高级物资开关=全选;载具开关=全选;倍镜开关=全选;药品开关=全选;枪械开关=全选;配件开关=全选;头盔开关=全选;
                     护甲开关=全选;背包开关=全选;投掷物开关=全选;子弹开关=全选;其他物资开关=全选;
                 }
