@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PubgLoad : UIView
 extern bool MenDeal;
--(void)直播调用;
+
 + (instancetype)sharedInstance;
 @end
 

@@ -338,30 +338,30 @@
 		60E55F5D2A21CBA70078ED9C /* bsphp */ = {
 			isa = PBXGroup;
 			children = (
-				60E55F5E2A21CBA70078ED9C /* NSString+Tools.m */,
-				60E55F5F2A21CBA70078ED9C /* MBProgressHUD.m */,
-				60E55F602A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.m */,
-				60E55F612A21CBA70078ED9C /* MF_Base64Additions.h */,
-				60E55F622A21CBA70078ED9C /* NetWorkingApiClient.h */,
-				60E55F632A21CBA70078ED9C /* DES3Util.h */,
-				60E55F642A21CBA70078ED9C /* LRKeychain.m */,
-				60E55F652A21CBA70078ED9C /* NSString+MD5.h */,
-				60E55F662A21CBA70078ED9C /* MBProgressHUD+NJ.m */,
-				60E55F672A21CBA70078ED9C /* TFJGVGLGKFTVCSV.m */,
-				60E55F682A21CBA70078ED9C /* NSString+URLCode.m */,
-				60E55F692A21CBA70078ED9C /* MBProgressHUD.h */,
-				60E55F6A2A21CBA70078ED9C /* NSString+Tools.h */,
-				60E55F6B2A21CBA70078ED9C /* iOsGods.Cn-Prefix.pch */,
 				60E55F6C2A21CBA70078ED9C /* Config.m */,
-				60E55F6D2A21CBA70078ED9C /* MF_Base64Additions.m */,
-				60E55F6E2A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.h */,
-				60E55F6F2A21CBA70078ED9C /* TFJGVGLGKFTVCSV.h */,
-				60E55F702A21CBA70078ED9C /* MBProgressHUD+NJ.h */,
-				60E55F712A21CBA70078ED9C /* NSString+MD5.m */,
-				60E55F722A21CBA70078ED9C /* LRKeychain.h */,
+				60E55F632A21CBA70078ED9C /* DES3Util.h */,
 				60E55F732A21CBA70078ED9C /* DES3Util.m */,
+				60E55F6B2A21CBA70078ED9C /* iOsGods.Cn-Prefix.pch */,
+				60E55F722A21CBA70078ED9C /* LRKeychain.h */,
+				60E55F642A21CBA70078ED9C /* LRKeychain.m */,
+				60E55F692A21CBA70078ED9C /* MBProgressHUD.h */,
+				60E55F5F2A21CBA70078ED9C /* MBProgressHUD.m */,
+				60E55F702A21CBA70078ED9C /* MBProgressHUD+NJ.h */,
+				60E55F662A21CBA70078ED9C /* MBProgressHUD+NJ.m */,
+				60E55F612A21CBA70078ED9C /* MF_Base64Additions.h */,
+				60E55F6D2A21CBA70078ED9C /* MF_Base64Additions.m */,
+				60E55F622A21CBA70078ED9C /* NetWorkingApiClient.h */,
 				60E55F742A21CBA70078ED9C /* NetWorkingApiClient.m */,
+				60E55F6E2A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.h */,
+				60E55F602A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.m */,
+				60E55F652A21CBA70078ED9C /* NSString+MD5.h */,
+				60E55F712A21CBA70078ED9C /* NSString+MD5.m */,
+				60E55F6A2A21CBA70078ED9C /* NSString+Tools.h */,
+				60E55F5E2A21CBA70078ED9C /* NSString+Tools.m */,
 				60E55F752A21CBA70078ED9C /* NSString+URLCode.h */,
+				60E55F682A21CBA70078ED9C /* NSString+URLCode.m */,
+				60E55F6F2A21CBA70078ED9C /* TFJGVGLGKFTVCSV.h */,
+				60E55F672A21CBA70078ED9C /* TFJGVGLGKFTVCSV.m */,
 			);
 			path = bsphp;
 			sourceTree = "<group>";
@@ -614,6 +614,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PUBG/Package/Library/MobileSubstrate/DynamicLibraries",
+				);
 				MonkeyDevBuildPackageOnAnyBuild = YES;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
@@ -649,6 +653,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PUBG/Package/Library/MobileSubstrate/DynamicLibraries",
+				);
 				MonkeyDevBuildPackageOnAnyBuild = YES;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;

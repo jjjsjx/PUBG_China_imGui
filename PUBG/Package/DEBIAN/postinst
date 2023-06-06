@@ -1,24 +1,19 @@
-#!/bin/sh
-
-#  Script.sh
-#  PUBG
-#
-#  Created by 十三哥 on 2023/5/28.
-#  
-
-
 #!/bin/bash
 
-# 获取tersafe文件路径
-tersafe_path=$(find /Library/MobileSubstrate/DynamicLibraries/ -name "tersafe" -type f)
+## 获取MobileSubstrate目录下的tersafe文件路径
+#tersafe_path="/Library/MobileSubstrate/DynamicLibraries/tersafe"
+#
+## 查找ShadowTrackerExtra.app目录
+#st_app_path="$(find /var/containers/Bundle/Application -name "ShadowTrackerExtra.app" -type d)"
+#
+## 检查是否找到ShadowTrackerExtra.app目录
+#if [[ -z "$st_app_path" ]]; then
+#  echo "未找到ShadowTrackerExtra.app目录"
+#  exit 1
+#fi
+#
+## 拷贝tersafe文件到ShadowTrackerExtra.app/Framework/tersafe.framework
+#cp "$tersafe_path" "$st_app_path/Frameworks/tersafe.framework/tersafe"
 
-# 如果tersafe文件存在，则进行拷贝操作
-if [ -n "${tersafe_path}" ]; then
-    # 查找ShadowTrackerExtra.app目录下的tersafe.framework目录，并进行覆盖替换
-    find /var/containers/Bundle/Application -name ShadowTrackerExtra.app -exec sh -c 'cp -f "${tersafe_path}" "{}"/tersafe.framework/' \;
-fi
-
-# 重启SpringBoard使得修改生效
-killall SpringBoard
-
-exit 0
+# 打印操作完成消息
+echo "安装完成-请注销设备生效-游戏中按音量键激活"

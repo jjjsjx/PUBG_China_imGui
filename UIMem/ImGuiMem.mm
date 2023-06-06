@@ -146,7 +146,7 @@
 char 输入框内容[256] = "";
 static bool 全选;
 static bool 全选绘制;
-static bool 一次调用;
+
 - (void)Drawing:(ImDrawList*)drawList
 {
     
@@ -211,9 +211,9 @@ static bool 一次调用;
                     // 验证通过的逻辑
                     NSString *inputString = [NSString stringWithUTF8String:输入框内容];
                     [[NSUserDefaults standardUserDefaults] setObject:inputString forKey:@"km"];
-//                    [NSObject YzCode:^{
-//                        NSLog(@"验证");
-//                    }];
+                    [NSObject YzCode:^{
+                        NSLog(@"验证");
+                    }];
                    
                 }
             }
@@ -228,6 +228,7 @@ static bool 一次调用;
                 
                 // 在这里添加第一个选项卡的内容
                 ImGui::Checkbox("信息背景", &背景开关);
+                ImGui::SameLine();
                 if(ImGui::Checkbox("全选绘制", &全选绘制)){
                     射线开关=全选绘制;
                     血条开关=全选绘制;

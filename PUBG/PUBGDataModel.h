@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "PUBGTypeHeader.h"
 #import <UIKit/UIKit.h>
+#include <string>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PUBGPlayerWZ : NSObject
@@ -19,7 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,  assign) uint64_t Player;
 //物资模型名字
 @property (nonatomic,  assign) NSString  * Name;
-
+//分类
+@property (nonatomic,  assign) int  Fenlei;
 @end
 
 
@@ -29,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,  assign) int TeamID;
 @property (nonatomic,  assign) int chiqiang;
 // 名称
-@property (nonatomic,    copy) NSString *PlayerName;
+@property (nonatomic,  assign) NSString *PlayerName;
 // 距离
 @property (nonatomic,  assign) CGFloat  Distance;
 // 血量

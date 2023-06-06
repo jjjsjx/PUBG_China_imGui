@@ -92,7 +92,7 @@ ImVec4 距离颜色 = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
 ImVec4 手持武器颜色 = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
 ImVec4 名字颜色 = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 ImVec4 背景颜色 = ImVec4(0.0f, 1.0f, 1.0f, 1.0f);
-
+ImVec4 物资颜色[15];
 #pragma mark - 初始化队伍颜色向量
 // 更具对标生成不同颜色
 std::unordered_map<int, ImVec4> team_colors;
@@ -141,7 +141,21 @@ static void EndGame()
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        物资颜色[0] = ImVec4(1.0f, 0.0f, 0.0f, 1.0f); // 红色
+        物资颜色[1] = ImVec4(1.0f, 0.5f, 0.0f, 1.0f); // 橙色
+        物资颜色[2] = ImVec4(1.0f, 1.0f, 0.0f, 1.0f); // 黄色
+        物资颜色[3] = ImVec4(0.0f, 1.0f, 0.0f, 1.0f); // 绿色
+        物资颜色[4] = ImVec4(0.0f, 1.0f, 1.0f, 1.0f); // 青色
+        物资颜色[5] = ImVec4(0.0f, 0.0f, 1.0f, 1.0f); // 蓝色
+        物资颜色[6] = ImVec4(0.5f, 0.0f, 1.0f, 1.0f); // 紫色
+        物资颜色[7] = ImVec4(1.0f, 0.0f, 1.0f, 1.0f); // 粉色
+        物资颜色[8] = ImVec4(0.5f, 0.5f, 0.5f, 1.0f); // 灰色
+        物资颜色[9] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f); // 白色
+        物资颜色[10] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f); // 黑色
+        物资颜色[11] = ImVec4(0.5f, 0.7f, 0.2f, 1.0f); // 深绿色
+        物资颜色[12] = ImVec4(0.8f, 0.2f, 0.8f, 1.0f); // 紫红色
+        物资颜色[13] = ImVec4(0.7f, 0.7f, 0.7f, 1.0f); // 浅灰色
+        物资颜色[14] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f); // 深灰色
     }
     return self;
 }
@@ -229,7 +243,7 @@ static void EndGame()
             if(背景开关){
                 //信息背景
                 ImVec4 背景颜色 = GetTeamColor(model.TeamID);
-                MsDrawList->AddLine(ImVec2(xd-40,yd-16), ImVec2(xd+40,yd-16), ImColor(model.isAI ? ImVec4(0.0f, 1.0f, 0.0f, 1.0f) : 背景颜色 ),13);
+                MsDrawList->AddLine(ImVec2(xd-40,yd-16), ImVec2(xd+40,yd-16), ImColor(model.isAI ? ImVec4(0.0f, 0.0f, 1.0f, 1.0f) : 背景颜色 ),13);
                 
                 //对标背景
                 MsDrawList->AddLine(ImVec2(xd-40,yd-16), ImVec2(xd-25,yd-16), ImColor(ImVec4(1.0f, 0.0f, 1.0f, 0.7f)),14);
@@ -253,7 +267,7 @@ static void EndGame()
                 //血条背景
                 MsDrawList->AddLine(ImVec2(xd-40,yd-9), ImVec2(xd+40,yd-9), ImColor(0xFFFFFFFF),3);//白色
                 //血条
-                MsDrawList->AddLine(ImVec2(xd-40,yd-9), ImVec2(xd-40+0.8*model.Health,yd-9), ImColor(model.isAI ? ImVec4(0.0f, 1.0f, 0.0f, 1.0f) : 血条颜色 ),3);
+                MsDrawList->AddLine(ImVec2(xd-40,yd-9), ImVec2(xd-40+0.8*model.Health,yd-9), ImColor(model.isAI ? ImVec4(0.0f, 1.0f, 1.0f, 0.0f) : 血条颜色 ),3);
             }
             
             if (手持武器开关) {
@@ -334,7 +348,7 @@ static void EndGame()
             PUBGPlayerWZ *mode = wzArray[i];
             NSString*NewName=[NSString stringWithFormat:@"%@  %.1f",mode.Name,mode.JuLi];
             const char *cString = [NewName cStringUsingEncoding:NSUTF8StringEncoding];
-            DrawText(cString, ImVec2(mode.WuZhi2D.X , mode.WuZhi2D.Y), true, ImColor(ImVec4(1.0f, 1.0f, 0.0f, 1.0f)), false, 10);
+            DrawText(cString, ImVec2(mode.WuZhi2D.X , mode.WuZhi2D.Y), true, ImColor(ImVec4(物资颜色[mode.Fenlei])), false, 10);
             
         }
         

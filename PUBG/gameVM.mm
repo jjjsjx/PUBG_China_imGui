@@ -642,6 +642,7 @@ bool getGame(){
                             [ClassName containsString:@"Burn"]){
                             model.Name=@"雷";//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
+                            model.Fenlei=0;
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
                             continue;//添加会记得跳出本次匹配 避免执行后面的if
                         }
@@ -650,6 +651,7 @@ bool getGame(){
                     if (高级物资开关 ) {
                         wzName=[self reName:ClassName ID:8];
                         if(wzName){
+                            model.Fenlei=8;
                             model.Name=[self reName:ClassName ID:8];//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
@@ -659,6 +661,7 @@ bool getGame(){
                     if (药品开关 ) {
                         wzName=[self reName:ClassName ID:2];
                         if(wzName){
+                            model.Fenlei=2;
                             model.Name=wzName;//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
@@ -668,6 +671,7 @@ bool getGame(){
                     if (枪械开关 ) {
                         wzName=[self reName:ClassName ID:4];
                         if(wzName){
+                            model.Fenlei=4;
                             model.Name=wzName;//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
@@ -677,6 +681,7 @@ bool getGame(){
                     if (载具开关 ) {
                         wzName=[self reName:ClassName ID:1];
                         if(wzName){
+                            model.Fenlei=1;
                             model.Name=wzName;//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
@@ -687,6 +692,7 @@ bool getGame(){
                     if (配件开关 ) {
                         wzName=[self reName:ClassName ID:5];
                         if(wzName){
+                            model.Fenlei=5;
                             model.Name=wzName;//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
@@ -696,6 +702,7 @@ bool getGame(){
                     if (倍镜开关 ) {
                         wzName=[self reName:ClassName ID:9];
                         if(wzName){
+                            model.Fenlei=9;
                             model.Name=wzName;//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
@@ -705,6 +712,7 @@ bool getGame(){
                     if (头盔开关 ) {
                         wzName=[self reName:ClassName ID:10];
                         if(wzName){
+                            model.Fenlei=10;
                             model.Name=wzName;//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
@@ -714,6 +722,7 @@ bool getGame(){
                     if (护甲开关 ) {
                         wzName=[self reName:ClassName ID:11];
                         if(wzName){
+                            model.Fenlei=11;
                             model.Name=wzName;//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
@@ -723,6 +732,7 @@ bool getGame(){
                     if (背包开关 ) {
                         wzName=[self reName:ClassName ID:12];
                         if(wzName){
+                            model.Fenlei=12;
                             model.Name=wzName;//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
@@ -732,6 +742,7 @@ bool getGame(){
                     if (子弹开关 ) {
                         wzName=[self reName:ClassName ID:6];
                         if(wzName){
+                            model.Fenlei=6;
                             model.Name=wzName;//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组
@@ -741,6 +752,7 @@ bool getGame(){
                     if (其他物资开关 ) {
                         wzName=[self reName:ClassName ID:7];
                         if(wzName){
+                            model.Fenlei=7;
                             model.Name=wzName;//储存查询到的真正名字字符串
                             model.Player=player;//储存物资编号
                             [self.物资缓存 addObject:model];//匹配到就添加到数组

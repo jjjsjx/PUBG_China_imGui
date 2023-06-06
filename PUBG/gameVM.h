@@ -32,7 +32,6 @@ typedef void (^PUBGBlock)(NSArray *playerArray,NSArray *wzArray);
 
 @interface gameVM : NSObject
 - (void)getData:(PUBGBlock)block;
-- (void)绘制玩家:(ImDrawList*)MsDrawList;
 + (instancetype)sharedInstance;
 - (void)CacheData;
 
