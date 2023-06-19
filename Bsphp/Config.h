@@ -8,17 +8,18 @@
 #define BSPHP_PASSWORD @"6IrQ34YSce9hrFb2X1"
 //接收Sgin验证 注意必须填写 并且有[KEY]
 #define BSPHP_INSGIN @"[KEY]RHHGFGSNGRG"
-//输出Sgin验证 注意必须填写 并且有[KEY]/Users/lwt/Desktop/2.20自瞄和平精英完美版/Bsphp/Config的副本.h
+//输出Sgin验证 注意必须填写 并且有[KEY]
 #define BSPHP_TOSGIN @"[KEY]RHHGFGSNGRG"
 //版本 和软件配置版本号一致 发布新版的时候 修改软件配置的版本号并且在URL那填写下载地址即可 客户端会弹出更新 确定会跳转浏览器下载
 #define JN_VERSION @"v1.0"
 
 //加密秘钥 这个在服务器文件后台 网站目录/include/applibapi/encryption下的bsphp_3des_vi.php 里面保持一致 搜索bsphp666就有3处地方都改掉 和这里源码一致
 #define gIv   @"NongShiF"
-
-
-
+//多少秒定时验证
 #define  BS_DSQ 600
+
+//软件高级选项-接收封包加密:返回封包加密 都选择baphp_3des_vi  数据输出格式选择bsphp_json
+
 /*以下5个 参数 填写在BSPHP后台对应的软件设置-软件描述处 每个功能一个换行 切记 参数为BOOL 值 YES 或NO 大写 顺序不能错源码写死了
 到期时间弹窗:YES
 验证udid还是idfa:YES

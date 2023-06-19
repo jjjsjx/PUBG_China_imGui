@@ -15,6 +15,46 @@
 #define kWidth  [UIScreen mainScreen].bounds.size.width
 #define kHeight [UIScreen mainScreen].bounds.size.height
 
+//Text：文本颜色
+//TextDisabled：禁用文本颜色
+//WindowBg：窗口背景颜色
+//ChildBg：子窗口背景颜色
+//PopupBg：弹出窗口背景颜色
+//Border：边框颜色
+//BorderShadow：边框阴影颜色
+//FrameBg：框架背景颜色
+//FrameBgHovered：鼠标悬停时的框架背景颜色
+//FrameBgActive：被按下时的框架背景颜色
+//TitleBg：标题栏背景颜色
+//TitleBgActive：被激活的标题栏背景颜色
+//TitleBgCollapsed：折叠的标题栏背景颜色
+//MenuBarBg：菜单栏背景颜色
+//ScrollbarBg：滚动条背景颜色
+//ScrollbarGrab：滚动条抓手颜色
+//ScrollbarGrabHovered：鼠标悬停时的滚动条抓手颜色
+//ScrollbarGrabActive：被按下时的滚动条抓手颜色
+//CheckMark：复选框标记颜色
+//SliderGrab：滑块颜色
+//SliderGrabActive：被按下时的滑块颜色
+//Button：按钮颜色
+//ButtonHovered：鼠标悬停时的按钮颜色
+//ButtonActive：被按下时的按钮颜色
+//Header：标头背景颜色
+//HeaderHovered：鼠标悬停时的标头背景颜色
+//HeaderActive：被按下时的标头背景颜色
+//Separator：分隔符颜色
+//SeparatorHovered：鼠标悬停时的分隔符颜色
+//SeparatorActive：被按下时的分隔符颜色
+//ResizeGrip：调整大小手柄颜色
+//ResizeGripHovered：鼠标悬停时的调整大小手柄颜色
+//ResizeGripActive：被按下时的调整大小手柄颜色
+//PlotLines：线性图线条颜色
+//PlotLinesHovered：鼠标悬停时的线性图线条颜色
+//PlotHistogram：直方图颜色
+//PlotHistogramHovered：鼠标悬停时的直方图颜色
+//TextSelectedBg：文本选中时的背景颜色
+//例子
+//ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.2f, 0.3f, 0.4f, 1.0f));  // 将被按下时按钮的颜色设置为深蓝色
 @interface ImGuiMem () <MTKViewDelegate>
 
 @property (nonatomic, strong) MTKView *mtkView;
@@ -25,16 +65,18 @@
 
 
 @implementation ImGuiMem
-
+static int 字体大小;
 + (instancetype)sharedInstance {
     static ImGuiMem *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[self alloc] initWithFrame:[YMUIWindow sharedInstance].bounds];
         [[ShiSnGeWindow sharedInstance] addSubview:sharedInstance];
+        字体大小=15;
     });
     return sharedInstance;
 }
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -51,13 +93,14 @@
         ImGuiIO& io = ImGui::GetIO(); (void)io;
         
         ImGui::StyleColorsDark();
+//        ImGui::StyleColorsLight();
         //系统默认字体
         //    NSString *FontPath = @"/System/Library/Fonts/LanguageSupport/PingFang.ttc";
         //    io.Fonts->AddFontFromFileTTF(FontPath.UTF8String, 40.f,NULL,io.Fonts->GetGlyphRangesChineseFull());
         //第三方字体
         ImFontConfig config;
         config.FontDataOwnedByAtlas = false;
-        io.Fonts->AddFontFromMemoryTTF((void *)jijia_data, jijia_size, 16, NULL,io.Fonts->GetGlyphRangesChineseFull());
+        io.Fonts->AddFontFromMemoryTTF((void *)jijia_data, jijia_size, 15, NULL,io.Fonts->GetGlyphRangesChineseFull());
         
         
         //加载
@@ -319,58 +362,71 @@ static bool 全选绘制;
             
             if (ImGui::BeginTabItem("高级功能")) // 开始第二个选项卡
             {
-                ImGui::Checkbox("无后座", &无后座开关);ImGui::SameLine();
+                ImGui::Checkbox("无后座", &无后座开关);
+                ImGui::SameLine();
+                ImGui::Checkbox("子弹聚点", &聚点开关);
+                ImGui::SameLine();
+                ImGui::Checkbox("镜头防抖", &防抖开关);
+                
                 ImGui::Checkbox("追踪", &追踪开关);
-                ImGui::SliderFloat("追踪半径", &追踪圆圈, 0, 100);
-                ImGui::SliderFloat("追踪距离", &追踪距离, 0, 300);
+                ImGui::SameLine();
                 static const char* items[] = { "头", "胸", "脊柱", "盆骨" , "脚"};
                 static int 复选;
-                
+
                 if (ImGui::RadioButton(items[0], &复选, 0)) {
                     // 当用户勾选了 "头" 时，将追踪位置设置为6
                     追踪部位 = 6;
                 }
                 ImGui::SameLine();
-                
+
                 if (ImGui::RadioButton(items[1], &复选, 1)) {
                     // 当用户勾选了 "胸" 时，将追踪位置设置为4
                     追踪部位 = 4;
                 }
                 ImGui::SameLine();
-                
+
                 if (ImGui::RadioButton(items[2], &复选, 2)) {
                     // 当用户勾选了 "脊柱" 时，将追踪位置设置为3
-                    追踪部位 = 3;
+                    追踪部位 = 3;––
                 }
                 ImGui::SameLine();
-                
+
                 if (ImGui::RadioButton(items[3], &复选, 3)) {
                     // 当用户勾选了 "盆骨" 时，将追踪位置设置为2
                     追踪部位 = 2;
                 }
                 ImGui::SameLine();
-                
+
                 if (ImGui::RadioButton(items[4], &复选, 4)) {
                     // 当用户勾选了 "脚" 时，将追踪位置设置为59
                     追踪部位 = 59;
                 }
-                
-                
-                
+                ImGui::SliderFloat("追踪半径", &追踪圆圈, 0, 100);
+                ImGui::SliderFloat("追踪距离", &追踪距离, 0, 300);
+
+
                 ImGui::NewLine();
                 ImGui::Checkbox("自瞄", &自瞄开关);
                 ImGui::SliderFloat("自瞄速度", &自瞄速度, 1, 20);
                 
                 ImGui::NewLine();
-                ImGui::NewLine();
-                
-                
                 const char* cstr = strdup([到期时间 UTF8String]);
                 ImGui::Text("人生如戏-全靠演技 到期时间:%s",cstr);
                 ImGui::EndTabItem();
             }
             if (ImGui::BeginTabItem("验证")) // 开始第二个选项卡
             {
+                static const char* items[] = { "深色模式", "浅色模式"};
+                static int 复选;
+
+                if(ImGui::RadioButton(items[0], &复选, 0)){
+                            ImGui::StyleColorsDark();
+                }
+                ImGui::SameLine();
+                if(ImGui::RadioButton(items[1], &复选, 1)){
+                    ImGui::StyleColorsLight();
+                }
+
                 ImGui::NewLine();
                 NSString*km=[[NSUserDefaults standardUserDefaults] objectForKey:@"km"];
                 const char* kmcstr = strdup([km UTF8String]);
@@ -392,7 +448,6 @@ static bool 全选绘制;
                 ImGui::EndTabItem();
             }
             
-            
             ImGui::EndTabBar(); // 结束选项卡栏
             ImGui::NewLine();
             
@@ -402,9 +457,6 @@ static bool 全选绘制;
         
         ImGui::NewLine();
         ImGui::Text("QQ:350722326 %.1f (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-        
-        
-        
         ImGui::End();
         
         

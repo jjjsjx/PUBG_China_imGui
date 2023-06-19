@@ -802,16 +802,33 @@ bool getGame(){
     //无后座相关
     uintptr_t PlayerCameraManager = Read<uintptr_t>(PlayerController + 0x758);
     readMemory(PlayerCameraManager + 0x12e0 + 0x10, sizeof(FMinimalViewInfo), &POV);
+    uintptr_t WeaponManagerComponent =Read<uintptr_t>(mySelf+ 0x24e0);
+    uintptr_t CurrentWeaponReplicated =Read<uintptr_t>(WeaponManagerComponent+ 0x728);
+    uintptr_t ShootWeaponEntityComp=Read<uintptr_t>(CurrentWeaponReplicated+ 0x12f8);
     if(无后座开关){
-        
-        uintptr_t WeaponManagerComponent =Read<uintptr_t>(mySelf+ 0x24e0);
-        uintptr_t CurrentWeaponReplicated =Read<uintptr_t>(WeaponManagerComponent+ 0x728);
-        uintptr_t ShootWeaponEntityComp=Read<uintptr_t>(CurrentWeaponReplicated+ 0x12f8);
         float RecoilKickADS = 0.001;
         writeMemory(ShootWeaponEntityComp + 0x16a0, sizeof(float), &RecoilKickADS);
         writeMemory(ShootWeaponEntityComp + 0x16ac, sizeof(float), &RecoilKickADS);
     }
-    
+    if (聚点开关) {
+        float judian1 = 0.01;
+        writeMemory(ShootWeaponEntityComp + 0x16fc, sizeof(float), &judian1);
+        writeMemory(ShootWeaponEntityComp + 0x1700, sizeof(float), &judian1);
+        writeMemory(ShootWeaponEntityComp + 0x1704, sizeof(float), &judian1);
+        writeMemory(ShootWeaponEntityComp + 0x1708, sizeof(float), &judian1);
+                    
+    }
+    if (防抖开关) {
+        float fangdou = 0.001;
+        writeMemory(ShootWeaponEntityComp + 0x17e4, sizeof(float), &fangdou);
+        writeMemory(ShootWeaponEntityComp + 0x17c8, sizeof(float), &fangdou);
+        writeMemory(ShootWeaponEntityComp + 0x17e4, sizeof(float), &fangdou);
+        writeMemory(ShootWeaponEntityComp + 0x16ec, sizeof(float), &fangdou);
+        writeMemory(ShootWeaponEntityComp + 0x16f0, sizeof(float), &fangdou);
+        writeMemory(ShootWeaponEntityComp + 0x16f4, sizeof(float), &fangdou);
+        writeMemory(ShootWeaponEntityComp + 0x16f8, sizeof(float), &fangdou);
+       
+    }
     // 初始化玩家字典
     NSMutableArray *playerArray = @[].mutableCopy;//玩家字典
     NSMutableArray *wzArray = @[].mutableCopy;//物资字典
@@ -980,7 +997,7 @@ bool getGame(){
                                     
                                     //开火自瞄
                                     
-                                    writeMemory(PlayerController + 0x6f8+ 4, sizeof(float), &Pitch);
+                                    writeMemory(PlayerController + 0x6f8, sizeof(float), &Pitch);
                                     
                                     writeMemory(PlayerController + 0x6f8+ 4, sizeof(float), &Yaw);
                                     

@@ -47,7 +47,7 @@ bool MenDeal;
     AVAudioSession*audioSession = [AVAudioSession sharedInstance];
     [audioSession setActive:YES error:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeChanged:) name:@"AVSystemController_SystemVolumeDidChangeNotification" object:nil];
-    
+    NSLog(@"音量");
 }
 - (void)volumeChanged:(NSNotification *)notification {
     float 最新音量 = [[[notification userInfo] objectForKey:@"AVSystemController_AudioVolumeNotificationParameter"] floatValue];
