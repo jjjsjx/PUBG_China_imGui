@@ -328,7 +328,7 @@ static NSString* getFNameFromID(uintptr_t gnamePtr, int classId){
 static NSString* getPlayerName(uintptr_t player){
     char Name[128];
     unsigned short buf16[16] = {0};
-    uintptr_t PlayerName = Read<uintptr_t>(player + 0xb50);
+    uintptr_t PlayerName = Read<uintptr_t>(player + 0x9d0);
     if (!isValidAddress(PlayerName)) return @"";
     if (!readMemory(PlayerName, 28, buf16)) return @"";
     
@@ -442,7 +442,7 @@ static FVector3D getBoneWithRotation(uintptr_t mesh, int Id, FTransform publicOb
     static FVector3D output = {0, 0, 0};
     
     uintptr_t addr;
-    if (!readMemory(mesh + 0x6f0, sizeof(uintptr_t), &addr)) {
+    if (!readMemory(mesh + 0x6c0, sizeof(uintptr_t), &addr)) {
         return output;
     }
     BoneMatrix = getMatrixConversion(addr + Id * 0x30);
@@ -462,9 +462,9 @@ static FVector3D getBoneWithRotation(uintptr_t mesh, int Id, FTransform publicOb
 }
 
 static FVector3D getRelativeLocation(uintptr_t actor){
-    uintptr_t RootComponent = Read<uintptr_t>(actor + 0x270);
+    uintptr_t RootComponent = Read<uintptr_t>(actor + 0x268);
     static FVector3D value;
-    readMemory(RootComponent + 0x1d0, sizeof(FVector3D), &value);
+    readMemory(RootComponent + 0x1b0, sizeof(FVector3D), &value);
     return value;
 }
 #pragma mark - 追踪函数
@@ -580,7 +580,8 @@ bool getGame(){
             GBase = getBaseAddress(task);
             if (isValidAddress(GBase)){
                 // 读取世界
-                Gworld = Read<uintptr_t>(GBase + 0xAAB00C0);
+                Gworld = Read<uintptr_t>(GBase + 0xB064888);
+                GName = Read<uintptr_t>(GBase + 0xACBF728);
                 if (isValidAddress(Gworld)){
                     return YES;
                 }
@@ -601,8 +602,8 @@ bool getGame(){
     self.人物缓存 = @[].mutableCopy;
     self.物资缓存=NULL;
     self.物资缓存 = @[].mutableCopy;
-    Gworld = Read<uintptr_t>(GBase + 0xAAB00C0);
-    GName = Read<uintptr_t>(GBase + 0xA88D458);
+    Gworld = Read<uintptr_t>(GBase + 0xB064888);
+    GName = Read<uintptr_t>(GBase + 0xACBF728);
     const float hpValues[] = {100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200};
     const int hpValueCount = sizeof(hpValues) / sizeof(float);
     // 获取视角信息
@@ -765,15 +766,15 @@ bool getGame(){
             
         }else{
             //玩家
-            float hpmax = Read<float>(player + 0xed0);
+            float hpmax = Read<float>(player + 0xd68);
             for (int j = 0; j < hpValueCount; j++) {
                 if (hpmax == hpValues[j]) {
-                    bool bDead = Read<bool>(player + 0xf30) & 1;
+                    bool bDead = Read<bool>(player + 0xdc8) & 1;
                     if (bDead) continue;
                     //排除自己
                     if (player == mySelf) continue;
-                    int TeamID = Read<int>(player + 0xbc0);
-                    int MyTeamID = Read<int>(PlayerController + 0xb00);
+                    int TeamID = Read<int>(player + 0xa48);
+                    int MyTeamID = Read<int>(PlayerController + 0x9a8);
                     if (TeamID == MyTeamID) continue;
                     //存储玩家数组
                     [self.人物缓存 addObject:@(player)];
@@ -800,8 +801,8 @@ bool getGame(){
     uintptr_t PlayerController = Read<uintptr_t>(ServerConnection + 0x30);
     uintptr_t mySelf = Read<uintptr_t>(PlayerController + 0x6d0);
     //无后座相关
-    uintptr_t PlayerCameraManager = Read<uintptr_t>(PlayerController + 0x758);
-    readMemory(PlayerCameraManager + 0x12e0 + 0x10, sizeof(FMinimalViewInfo), &POV);
+    uintptr_t PlayerCameraManager = Read<uintptr_t>(PlayerController + 0x5c0);
+    readMemory(PlayerCameraManager + 0x1140 + 0x10, sizeof(FMinimalViewInfo), &POV);
     uintptr_t WeaponManagerComponent =Read<uintptr_t>(mySelf+ 0x24e0);
     uintptr_t CurrentWeaponReplicated =Read<uintptr_t>(WeaponManagerComponent+ 0x728);
     uintptr_t ShootWeaponEntityComp=Read<uintptr_t>(CurrentWeaponReplicated+ 0x12f8);
@@ -855,12 +856,12 @@ bool getGame(){
         //判断迷雾 超出地图外面 跳出循环
         if (WorldLocation.X<0 || WorldLocation.Y<0) continue;
         //人机
-        model.isAI = Read<BOOL>(player + 0xbdc) != 0;
+        model.isAI = Read<BOOL>(player + 0xa64) != 0;
         //标记为屏幕里面
         model.isPm=YES;
         //血量 判断血量开关开启才去计算血量 避免浪费资源
         if (血条开关) {
-            model.Health = Read<float>(player + 0xec8) / Read<float>(player + 0xed0) * 100;
+            model.Health = Read<float>(player + 0xd60) / Read<float>(player + 0xd68) * 100;
         }
         //名字 读取名字转字符串 比较占用资源 判断名字开启才去读取名字 并且根据ai 更名
         if (名字开关) {
@@ -868,13 +869,13 @@ bool getGame(){
             if (model.PlayerName.length < 1) continue;
             if (model.isAI) model.PlayerName = @"Ai_人机";
             //队标 和名字一起显示的 所以在名字开关里
-            model.TeamID = Read<int>(player + 0xbc0);
+            model.TeamID = Read<int>(player + 0xa48);
         }
         
         
         //骨骼===========================
-        uintptr_t Mesh = Read<uintptr_t>(player + 0x750);
-        FTransform RelativeScale3D = getMatrixConversion(Mesh + 0x1C0);
+        uintptr_t Mesh = Read<uintptr_t>(player + 0x5b8);
+        FTransform RelativeScale3D = getMatrixConversion(Mesh + 0x194 +0xC);
         
         // 骨骼有很多关节点都要把3D转屏幕坐标 占用资源 开关开启才去计算
         if (骨骼开关) {

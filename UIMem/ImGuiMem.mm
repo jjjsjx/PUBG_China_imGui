@@ -387,7 +387,7 @@ static bool 全选绘制;
 
                 if (ImGui::RadioButton(items[2], &复选, 2)) {
                     // 当用户勾选了 "脊柱" 时，将追踪位置设置为3
-                    追踪部位 = 3;––
+                    追踪部位 = 3;
                 }
                 ImGui::SameLine();
 
