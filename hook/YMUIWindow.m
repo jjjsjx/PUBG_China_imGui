@@ -12,7 +12,7 @@ static dispatch_once_t _onceToken;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.userInteractionEnabled = YES;
+        self.userInteractionEnabled = NO;
         self.windowLevel = UIWindowLevelStatusBar;
         self.clipsToBounds = YES;
         [self setHidden:NO];
@@ -24,15 +24,17 @@ static dispatch_once_t _onceToken;
     return self;
 }
 
+
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     UIView *view = [super hitTest:point withEvent:event];
     if (view == self.rootViewController.view) {
         return nil;
     }
-    NSLog(@"aaaa%s",__func__);
+    
     return view;
 }
+
 
 - (BOOL)_ignoresHitTest {
     

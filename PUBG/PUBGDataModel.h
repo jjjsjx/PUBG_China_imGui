@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 //物资2D坐标系
 @property (nonatomic,  assign) FVector2D WuZhi2D;
 //物资
-@property (nonatomic,  assign) uint64_t Player;
+@property (nonatomic,  assign) uintptr_t Player;
 //物资模型名字
 @property (nonatomic,  assign) NSString  * Name;
 //分类

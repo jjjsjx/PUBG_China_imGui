@@ -11,28 +11,8 @@ static dispatch_once_t _onceToken;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setupViews];
 }
 
-#pragma mark - 视图
-
-- (void)setupViews
-{
-
-}
-
-- (void)showAlet
-{
-
-}
-
-#pragma mark - 事件
-
-//- (BOOL)shouldAutorotate
-//{
-//    // 是否自动旋转
-//    return YES;
-//}
 - (BOOL)_ignoresHitTest {
     return YES;
 }
@@ -52,14 +32,5 @@ static dispatch_once_t _onceToken;
     });
     return _sharedInstance;
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

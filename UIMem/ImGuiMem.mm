@@ -1,16 +1,17 @@
-#import "ShiSnGeWindow.h"
+
 #import "ImGuiMem.h"
 #import <Metal/Metal.h>
 #import <MetalKit/MetalKit.h>
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import "YMUIWindow.h"
 #import <shisangeIMGUI/imgui_impl_metal.h>
 #import <shisangeIMGUI/imgui.h>
-#import <Foundation/Foundation.h>
+
 #import "PubgLoad.h"
-#import "gameVM.h"
+#import "GameVV.h"
 #import "QQ350722326.h"
-#import <UIKit/UIKit.h>
+
+#import "ShiSnGeWindow.h"
 #import "ESP.h"
 #define kWidth  [UIScreen mainScreen].bounds.size.width
 #define kHeight [UIScreen mainScreen].bounds.size.height
@@ -70,9 +71,8 @@ static int 字体大小;
     static ImGuiMem *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] initWithFrame:[YMUIWindow sharedInstance].bounds];
-        [[ShiSnGeWindow sharedInstance] addSubview:sharedInstance];
-        字体大小=15;
+        sharedInstance = [[self alloc] initWithFrame:[ShiSnGeWindow sharedInstance].bounds];
+        
     });
     return sharedInstance;
 }
@@ -81,7 +81,7 @@ static int 字体大小;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        字体大小=15;
         self.secureTextEntry=YES;
         _device = MTLCreateSystemDefaultDevice();
         _commandQueue = [_device newCommandQueue];
@@ -113,7 +113,7 @@ static int 字体大小;
         self.mtkView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
         self.mtkView.clipsToBounds = YES;
         self.mtkView.delegate = self;
-        self.frame=[YMUIWindow sharedInstance].bounds;
+        self.frame=[ShiSnGeWindow sharedInstance].bounds;
         
         [self.subviews.firstObject addSubview:self.mtkView];
         
@@ -194,7 +194,8 @@ static bool 全选绘制;
 {
     
     if(MenDeal){
-        ImGui::Begin("十三哥微信: NongShiFu123");
+        
+        ImGui::Begin("十三哥微信: NongShiFu123",&MenDeal);
         
         ImGui::Checkbox("总开关", &绘制总开关);
         ImGui::SameLine();
@@ -466,11 +467,10 @@ static bool 全选绘制;
     }
     
 }
-#pragma mark - 触摸互动
+
 #pragma mark - 触摸互动
 - (void)updateIOWithTouchEvent:(UIEvent *)event
 {
-    
     UITouch *anyTouch = event.allTouches.anyObject;
     CGPoint touchLocation = [anyTouch locationInView:self];
     

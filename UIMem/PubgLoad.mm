@@ -4,17 +4,15 @@
 //
 //  Created by 李良林 on 2021/2/14.
 //
-
-#import "YMUIWindow.h"
-#import "ShiSnGeWindow.h"
-#import "ShiSanGeViewController.h"
-#import "gameVM.h"
-#import "PubgLoad.h"
+#import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
+
+#import "gameVV.h"
+#import "PubgLoad.h"
 #import "ImGuiMem.h"
 #import "QQ350722326.h"
-
-#import <AVFoundation/AVFoundation.h>
+#import "ShiSnGeWindow.h"
+#import "YMUIWindow.h"
 @interface PubgLoad()
 
 @end
@@ -35,8 +33,6 @@ bool MenDeal;
 + (instancetype)sharedInstance
 {
     dispatch_once(&_onceToken, ^{
-        [ImGuiMem sharedInstance];
-        [[YMUIWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
         _sharedInstance = [[self alloc] init];
     });
     return _sharedInstance;
@@ -55,6 +51,7 @@ bool MenDeal;
         初始音量=最新音量;
         MenDeal = !MenDeal;
         if (getGame()){
+            
             [self volumeChanged];
         }else{
             MenDeal=false;
@@ -66,13 +63,13 @@ bool MenDeal;
 }
 
 - (void)volumeChanged {
-    //移除已经添加到窗口中的 ImGuiMem 实例
-    [[ImGuiMem sharedInstance] removeFromSuperview];
     //根据 MenDeal 的值添加新的 ImGuiMem 实例
+    [[ImGuiMem sharedInstance] removeFromSuperview];
     if (MenDeal) {
         [[ShiSnGeWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
     } else {
         [[YMUIWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
+
     }
     [ImGuiMem sharedInstance].userInteractionEnabled = MenDeal;
     [NSObject YzCode:^{

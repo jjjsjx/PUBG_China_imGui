@@ -15,6 +15,16 @@
 		609570A32A27528100E12BEA /* ESP.h in Headers */ = {isa = PBXBuildFile; fileRef = 609570A12A27528100E12BEA /* ESP.h */; };
 		609570A42A27528100E12BEA /* ESP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 609570A22A27528100E12BEA /* ESP.mm */; };
 		609570B62A29ECAE00E12BEA /* PUBGDataModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 609570B52A29ECAE00E12BEA /* PUBGDataModel.mm */; };
+		60C2FA3E2A68F0B300978062 /* GameVV.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60C2FA3C2A68F0B300978062 /* GameVV.mm */; };
+		60C2FA3F2A68F0B300978062 /* GameVV.h in Headers */ = {isa = PBXBuildFile; fileRef = 60C2FA3D2A68F0B300978062 /* GameVV.h */; };
+		60C2FA582A6925AE00978062 /* ShiSanGeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C2FA502A6925AD00978062 /* ShiSanGeViewController.m */; };
+		60C2FA592A6925AE00978062 /* YMUIWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C2FA512A6925AD00978062 /* YMUIWindow.m */; };
+		60C2FA5A2A6925AE00978062 /* YMUIViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 60C2FA522A6925AD00978062 /* YMUIViewController.h */; };
+		60C2FA5B2A6925AE00978062 /* ShiSnGeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C2FA532A6925AD00978062 /* ShiSnGeWindow.m */; };
+		60C2FA5C2A6925AE00978062 /* YMUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C2FA542A6925AE00978062 /* YMUIViewController.m */; };
+		60C2FA5D2A6925AE00978062 /* ShiSnGeWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 60C2FA552A6925AE00978062 /* ShiSnGeWindow.h */; };
+		60C2FA5E2A6925AE00978062 /* YMUIWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 60C2FA562A6925AE00978062 /* YMUIWindow.h */; };
+		60C2FA5F2A6925AE00978062 /* ShiSanGeViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 60C2FA572A6925AE00978062 /* ShiSanGeViewController.h */; };
 		60D75A0F2A23C83300022BD4 /* NSTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 60D75A0E2A23C83300022BD4 /* NSTask.h */; };
 		60D8697B29F83187007433D4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D8697A29F83187007433D4 /* CoreGraphics.framework */; };
 		60D8697D29F8318B007433D4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D8697C29F8318B007433D4 /* QuartzCore.framework */; };
@@ -22,14 +32,6 @@
 		60E55E3D2A1F7A9C0078ED9C /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E55E3B2A1F7A9C0078ED9C /* Metal.framework */; };
 		60E55E3E2A1F7A9C0078ED9C /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E55E3C2A1F7A9C0078ED9C /* MetalKit.framework */; };
 		60E55E402A1F7AA10078ED9C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E55E3F2A1F7AA10078ED9C /* AVFoundation.framework */; };
-		60E55E462A1F7B8B0078ED9C /* YMUIWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55E422A1F7B8B0078ED9C /* YMUIWindow.m */; };
-		60E55E472A1F7B8B0078ED9C /* YMUIWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55E432A1F7B8B0078ED9C /* YMUIWindow.h */; };
-		60E55E4B2A1F7BC60078ED9C /* YMUIViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55E492A1F7BC60078ED9C /* YMUIViewController.h */; };
-		60E55E4C2A1F7BC60078ED9C /* YMUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55E4A2A1F7BC60078ED9C /* YMUIViewController.m */; };
-		60E55E532A1F852C0078ED9C /* ShiSanGeViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55E512A1F852C0078ED9C /* ShiSanGeViewController.h */; };
-		60E55E542A1F852C0078ED9C /* ShiSanGeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55E522A1F852C0078ED9C /* ShiSanGeViewController.m */; };
-		60E55E572A1F85510078ED9C /* ShiSnGeWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55E552A1F85510078ED9C /* ShiSnGeWindow.h */; };
-		60E55E582A1F85510078ED9C /* ShiSnGeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55E562A1F85510078ED9C /* ShiSnGeWindow.m */; };
 		60E55ECC2A2097900078ED9C /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E55ECB2A2097900078ED9C /* MediaPlayer.framework */; };
 		60E55EDF2A20BA0D0078ED9C /* ImGuiMem.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55ED42A20BA0D0078ED9C /* ImGuiMem.h */; };
 		60E55EE02A20BA0D0078ED9C /* PubgLoad.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55ED52A20BA0D0078ED9C /* PubgLoad.h */; };
@@ -41,30 +43,19 @@
 		60E55F512A21B3E60078ED9C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E55F502A21B3E60078ED9C /* AudioToolbox.framework */; };
 		60E55F532A21B3ED0078ED9C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E55F522A21B3ED0078ED9C /* MobileCoreServices.framework */; };
 		60E55F582A21CB1F0078ED9C /* PUBGTypeHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F552A21CB1E0078ED9C /* PUBGTypeHeader.h */; };
-		60E55F592A21CB1F0078ED9C /* gameVM.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F562A21CB1E0078ED9C /* gameVM.h */; };
-		60E55F5A2A21CB1F0078ED9C /* gameVM.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F572A21CB1F0078ED9C /* gameVM.mm */; };
 		60E55F862A21CBA70078ED9C /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F5C2A21CBA70078ED9C /* Config.h */; };
 		60E55F872A21CBA70078ED9C /* NSString+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F5E2A21CBA70078ED9C /* NSString+Tools.m */; };
-		60E55F882A21CBA70078ED9C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F5F2A21CBA70078ED9C /* MBProgressHUD.m */; };
 		60E55F892A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F602A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.m */; };
 		60E55F8A2A21CBA70078ED9C /* MF_Base64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F612A21CBA70078ED9C /* MF_Base64Additions.h */; };
 		60E55F8B2A21CBA70078ED9C /* NetWorkingApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F622A21CBA70078ED9C /* NetWorkingApiClient.h */; };
 		60E55F8C2A21CBA70078ED9C /* DES3Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F632A21CBA70078ED9C /* DES3Util.h */; };
-		60E55F8D2A21CBA70078ED9C /* LRKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F642A21CBA70078ED9C /* LRKeychain.m */; };
 		60E55F8E2A21CBA70078ED9C /* NSString+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F652A21CBA70078ED9C /* NSString+MD5.h */; };
-		60E55F8F2A21CBA70078ED9C /* MBProgressHUD+NJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F662A21CBA70078ED9C /* MBProgressHUD+NJ.m */; };
-		60E55F902A21CBA70078ED9C /* TFJGVGLGKFTVCSV.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F672A21CBA70078ED9C /* TFJGVGLGKFTVCSV.m */; };
 		60E55F912A21CBA70078ED9C /* NSString+URLCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F682A21CBA70078ED9C /* NSString+URLCode.m */; };
-		60E55F922A21CBA70078ED9C /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F692A21CBA70078ED9C /* MBProgressHUD.h */; };
 		60E55F932A21CBA70078ED9C /* NSString+Tools.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F6A2A21CBA70078ED9C /* NSString+Tools.h */; };
-		60E55F942A21CBA70078ED9C /* iOsGods.Cn-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F6B2A21CBA70078ED9C /* iOsGods.Cn-Prefix.pch */; };
 		60E55F952A21CBA70078ED9C /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F6C2A21CBA70078ED9C /* Config.m */; };
 		60E55F962A21CBA70078ED9C /* MF_Base64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F6D2A21CBA70078ED9C /* MF_Base64Additions.m */; };
 		60E55F972A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F6E2A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.h */; };
-		60E55F982A21CBA70078ED9C /* TFJGVGLGKFTVCSV.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F6F2A21CBA70078ED9C /* TFJGVGLGKFTVCSV.h */; };
-		60E55F992A21CBA70078ED9C /* MBProgressHUD+NJ.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F702A21CBA70078ED9C /* MBProgressHUD+NJ.h */; };
 		60E55F9A2A21CBA70078ED9C /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F712A21CBA70078ED9C /* NSString+MD5.m */; };
-		60E55F9B2A21CBA70078ED9C /* LRKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F722A21CBA70078ED9C /* LRKeychain.h */; };
 		60E55F9C2A21CBA70078ED9C /* DES3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F732A21CBA70078ED9C /* DES3Util.m */; };
 		60E55F9D2A21CBA70078ED9C /* NetWorkingApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E55F742A21CBA70078ED9C /* NetWorkingApiClient.m */; };
 		60E55F9E2A21CBA70078ED9C /* NSString+URLCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E55F752A21CBA70078ED9C /* NSString+URLCode.h */; };
@@ -98,6 +89,16 @@
 		609570A12A27528100E12BEA /* ESP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESP.h; sourceTree = "<group>"; };
 		609570A22A27528100E12BEA /* ESP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ESP.mm; sourceTree = "<group>"; };
 		609570B52A29ECAE00E12BEA /* PUBGDataModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PUBGDataModel.mm; sourceTree = "<group>"; };
+		60C2FA3C2A68F0B300978062 /* GameVV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameVV.mm; sourceTree = "<group>"; };
+		60C2FA3D2A68F0B300978062 /* GameVV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameVV.h; sourceTree = "<group>"; };
+		60C2FA502A6925AD00978062 /* ShiSanGeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShiSanGeViewController.m; sourceTree = "<group>"; };
+		60C2FA512A6925AD00978062 /* YMUIWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMUIWindow.m; sourceTree = "<group>"; };
+		60C2FA522A6925AD00978062 /* YMUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMUIViewController.h; sourceTree = "<group>"; };
+		60C2FA532A6925AD00978062 /* ShiSnGeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShiSnGeWindow.m; sourceTree = "<group>"; };
+		60C2FA542A6925AE00978062 /* YMUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMUIViewController.m; sourceTree = "<group>"; };
+		60C2FA552A6925AE00978062 /* ShiSnGeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiSnGeWindow.h; sourceTree = "<group>"; };
+		60C2FA562A6925AE00978062 /* YMUIWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMUIWindow.h; sourceTree = "<group>"; };
+		60C2FA572A6925AE00978062 /* ShiSanGeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiSanGeViewController.h; sourceTree = "<group>"; };
 		60D75A0D2A2382DB00022BD4 /* postinst */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = postinst; sourceTree = "<group>"; };
 		60D75A0E2A23C83300022BD4 /* NSTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTask.h; sourceTree = "<group>"; };
 		60D8697A29F83187007433D4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -106,14 +107,6 @@
 		60E55E3B2A1F7A9C0078ED9C /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		60E55E3C2A1F7A9C0078ED9C /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		60E55E3F2A1F7AA10078ED9C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		60E55E422A1F7B8B0078ED9C /* YMUIWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMUIWindow.m; sourceTree = "<group>"; };
-		60E55E432A1F7B8B0078ED9C /* YMUIWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMUIWindow.h; sourceTree = "<group>"; };
-		60E55E492A1F7BC60078ED9C /* YMUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMUIViewController.h; sourceTree = "<group>"; };
-		60E55E4A2A1F7BC60078ED9C /* YMUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMUIViewController.m; sourceTree = "<group>"; };
-		60E55E512A1F852C0078ED9C /* ShiSanGeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShiSanGeViewController.h; sourceTree = "<group>"; };
-		60E55E522A1F852C0078ED9C /* ShiSanGeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShiSanGeViewController.m; sourceTree = "<group>"; };
-		60E55E552A1F85510078ED9C /* ShiSnGeWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShiSnGeWindow.h; sourceTree = "<group>"; };
-		60E55E562A1F85510078ED9C /* ShiSnGeWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShiSnGeWindow.m; sourceTree = "<group>"; };
 		60E55ECB2A2097900078ED9C /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		60E55ED42A20BA0D0078ED9C /* ImGuiMem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImGuiMem.h; sourceTree = "<group>"; };
 		60E55ED52A20BA0D0078ED9C /* PubgLoad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PubgLoad.h; sourceTree = "<group>"; };
@@ -125,30 +118,19 @@
 		60E55F502A21B3E60078ED9C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		60E55F522A21B3ED0078ED9C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		60E55F552A21CB1E0078ED9C /* PUBGTypeHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PUBGTypeHeader.h; sourceTree = "<group>"; };
-		60E55F562A21CB1E0078ED9C /* gameVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gameVM.h; sourceTree = "<group>"; };
-		60E55F572A21CB1F0078ED9C /* gameVM.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = gameVM.mm; sourceTree = "<group>"; };
 		60E55F5C2A21CBA70078ED9C /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		60E55F5E2A21CBA70078ED9C /* NSString+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Tools.m"; sourceTree = "<group>"; };
-		60E55F5F2A21CBA70078ED9C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		60E55F602A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+StichingStringkeyValue.m"; sourceTree = "<group>"; };
 		60E55F612A21CBA70078ED9C /* MF_Base64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base64Additions.h; sourceTree = "<group>"; };
 		60E55F622A21CBA70078ED9C /* NetWorkingApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorkingApiClient.h; sourceTree = "<group>"; };
 		60E55F632A21CBA70078ED9C /* DES3Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DES3Util.h; sourceTree = "<group>"; };
-		60E55F642A21CBA70078ED9C /* LRKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRKeychain.m; sourceTree = "<group>"; };
 		60E55F652A21CBA70078ED9C /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		60E55F662A21CBA70078ED9C /* MBProgressHUD+NJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+NJ.m"; sourceTree = "<group>"; };
-		60E55F672A21CBA70078ED9C /* TFJGVGLGKFTVCSV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFJGVGLGKFTVCSV.m; sourceTree = "<group>"; };
 		60E55F682A21CBA70078ED9C /* NSString+URLCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLCode.m"; sourceTree = "<group>"; };
-		60E55F692A21CBA70078ED9C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		60E55F6A2A21CBA70078ED9C /* NSString+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Tools.h"; sourceTree = "<group>"; };
-		60E55F6B2A21CBA70078ED9C /* iOsGods.Cn-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "iOsGods.Cn-Prefix.pch"; sourceTree = "<group>"; };
 		60E55F6C2A21CBA70078ED9C /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		60E55F6D2A21CBA70078ED9C /* MF_Base64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base64Additions.m; sourceTree = "<group>"; };
 		60E55F6E2A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+StichingStringkeyValue.h"; sourceTree = "<group>"; };
-		60E55F6F2A21CBA70078ED9C /* TFJGVGLGKFTVCSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFJGVGLGKFTVCSV.h; sourceTree = "<group>"; };
-		60E55F702A21CBA70078ED9C /* MBProgressHUD+NJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+NJ.h"; sourceTree = "<group>"; };
 		60E55F712A21CBA70078ED9C /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
-		60E55F722A21CBA70078ED9C /* LRKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRKeychain.h; sourceTree = "<group>"; };
 		60E55F732A21CBA70078ED9C /* DES3Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DES3Util.m; sourceTree = "<group>"; };
 		60E55F742A21CBA70078ED9C /* NetWorkingApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorkingApiClient.m; sourceTree = "<group>"; };
 		60E55F752A21CBA70078ED9C /* NSString+URLCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLCode.h"; sourceTree = "<group>"; };
@@ -240,14 +222,14 @@
 		6066AC0F29F82CD0008273C2 /* hook */ = {
 			isa = PBXGroup;
 			children = (
-				60E55E492A1F7BC60078ED9C /* YMUIViewController.h */,
-				60E55E4A2A1F7BC60078ED9C /* YMUIViewController.m */,
-				60E55E432A1F7B8B0078ED9C /* YMUIWindow.h */,
-				60E55E422A1F7B8B0078ED9C /* YMUIWindow.m */,
-				60E55E512A1F852C0078ED9C /* ShiSanGeViewController.h */,
-				60E55E522A1F852C0078ED9C /* ShiSanGeViewController.m */,
-				60E55E552A1F85510078ED9C /* ShiSnGeWindow.h */,
-				60E55E562A1F85510078ED9C /* ShiSnGeWindow.m */,
+				60C2FA572A6925AE00978062 /* ShiSanGeViewController.h */,
+				60C2FA502A6925AD00978062 /* ShiSanGeViewController.m */,
+				60C2FA552A6925AE00978062 /* ShiSnGeWindow.h */,
+				60C2FA532A6925AD00978062 /* ShiSnGeWindow.m */,
+				60C2FA522A6925AD00978062 /* YMUIViewController.h */,
+				60C2FA542A6925AE00978062 /* YMUIViewController.m */,
+				60C2FA562A6925AE00978062 /* YMUIWindow.h */,
+				60C2FA512A6925AD00978062 /* YMUIWindow.m */,
 				6066AC1529F82CD0008273C2 /* Ding.xm */,
 				6066AC1629F82CD0008273C2 /* Ding.mm */,
 			);
@@ -313,8 +295,8 @@
 			children = (
 				609570A12A27528100E12BEA /* ESP.h */,
 				609570A22A27528100E12BEA /* ESP.mm */,
-				60E55F562A21CB1E0078ED9C /* gameVM.h */,
-				60E55F572A21CB1F0078ED9C /* gameVM.mm */,
+				60C2FA3D2A68F0B300978062 /* GameVV.h */,
+				60C2FA3C2A68F0B300978062 /* GameVV.mm */,
 				6066AC1029F82CD0008273C2 /* Package */,
 				606630852A246FD5005BE656 /* PUBGDataModel.h */,
 				609570B52A29ECAE00E12BEA /* PUBGDataModel.mm */,
@@ -341,13 +323,6 @@
 				60E55F6C2A21CBA70078ED9C /* Config.m */,
 				60E55F632A21CBA70078ED9C /* DES3Util.h */,
 				60E55F732A21CBA70078ED9C /* DES3Util.m */,
-				60E55F6B2A21CBA70078ED9C /* iOsGods.Cn-Prefix.pch */,
-				60E55F722A21CBA70078ED9C /* LRKeychain.h */,
-				60E55F642A21CBA70078ED9C /* LRKeychain.m */,
-				60E55F692A21CBA70078ED9C /* MBProgressHUD.h */,
-				60E55F5F2A21CBA70078ED9C /* MBProgressHUD.m */,
-				60E55F702A21CBA70078ED9C /* MBProgressHUD+NJ.h */,
-				60E55F662A21CBA70078ED9C /* MBProgressHUD+NJ.m */,
 				60E55F612A21CBA70078ED9C /* MF_Base64Additions.h */,
 				60E55F6D2A21CBA70078ED9C /* MF_Base64Additions.m */,
 				60E55F622A21CBA70078ED9C /* NetWorkingApiClient.h */,
@@ -360,8 +335,6 @@
 				60E55F5E2A21CBA70078ED9C /* NSString+Tools.m */,
 				60E55F752A21CBA70078ED9C /* NSString+URLCode.h */,
 				60E55F682A21CBA70078ED9C /* NSString+URLCode.m */,
-				60E55F6F2A21CBA70078ED9C /* TFJGVGLGKFTVCSV.h */,
-				60E55F672A21CBA70078ED9C /* TFJGVGLGKFTVCSV.m */,
 			);
 			path = bsphp;
 			sourceTree = "<group>";
@@ -394,37 +367,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				60E55FA32A21CBA70078ED9C /* AFURLRequestSerialization.h in Headers */,
-				60E55F942A21CBA70078ED9C /* iOsGods.Cn-Prefix.pch in Headers */,
 				60E55FA02A21CBA70078ED9C /* AFSecurityPolicy.h in Headers */,
 				609570A32A27528100E12BEA /* ESP.h in Headers */,
 				60E55F9F2A21CBA70078ED9C /* QQ350722326.h in Headers */,
-				60E55F982A21CBA70078ED9C /* TFJGVGLGKFTVCSV.h in Headers */,
 				60E55FAC2A21CBA70078ED9C /* AFHTTPSessionManager.h in Headers */,
+				60C2FA5A2A6925AE00978062 /* YMUIViewController.h in Headers */,
 				60E55F862A21CBA70078ED9C /* Config.h in Headers */,
 				60E55F8C2A21CBA70078ED9C /* DES3Util.h in Headers */,
 				60E55FA92A21CBA70078ED9C /* AFNetworking.h in Headers */,
-				60E55E4B2A1F7BC60078ED9C /* YMUIViewController.h in Headers */,
 				60E55F972A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.h in Headers */,
 				60E55EE02A20BA0D0078ED9C /* PubgLoad.h in Headers */,
 				60D75A0F2A23C83300022BD4 /* NSTask.h in Headers */,
+				60C2FA5F2A6925AE00978062 /* ShiSanGeViewController.h in Headers */,
 				60E55FA12A21CBA70078ED9C /* AFNetworkReachabilityManager.h in Headers */,
 				60E55FA22A21CBA70078ED9C /* AFURLSessionManager.h in Headers */,
 				60E55EDF2A20BA0D0078ED9C /* ImGuiMem.h in Headers */,
-				60E55F9B2A21CBA70078ED9C /* LRKeychain.h in Headers */,
 				60E55F9E2A21CBA70078ED9C /* NSString+URLCode.h in Headers */,
-				60E55F592A21CB1F0078ED9C /* gameVM.h in Headers */,
-				60E55E532A1F852C0078ED9C /* ShiSanGeViewController.h in Headers */,
 				60E55F8A2A21CBA70078ED9C /* MF_Base64Additions.h in Headers */,
+				60C2FA3F2A68F0B300978062 /* GameVV.h in Headers */,
 				60E55F8E2A21CBA70078ED9C /* NSString+MD5.h in Headers */,
 				60E55F8B2A21CBA70078ED9C /* NetWorkingApiClient.h in Headers */,
-				60E55F922A21CBA70078ED9C /* MBProgressHUD.h in Headers */,
 				606630872A246FD5005BE656 /* PUBGDataModel.h in Headers */,
-				60E55E472A1F7B8B0078ED9C /* YMUIWindow.h in Headers */,
-				60E55F992A21CBA70078ED9C /* MBProgressHUD+NJ.h in Headers */,
 				60E55F932A21CBA70078ED9C /* NSString+Tools.h in Headers */,
+				60C2FA5D2A6925AE00978062 /* ShiSnGeWindow.h in Headers */,
 				60E55FA62A21CBA70078ED9C /* AFURLResponseSerialization.h in Headers */,
+				60C2FA5E2A6925AE00978062 /* YMUIWindow.h in Headers */,
 				60E55F582A21CB1F0078ED9C /* PUBGTypeHeader.h in Headers */,
-				60E55E572A1F85510078ED9C /* ShiSnGeWindow.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,7 +423,7 @@
 		6066ABFC29F82CD0008273C2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1170;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					6066AC0529F82CD0008273C2 = {
 						CreatedOnToolsVersion = 11.7;
@@ -505,34 +473,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60E55E542A1F852C0078ED9C /* ShiSanGeViewController.m in Sources */,
-				60E55F8D2A21CBA70078ED9C /* LRKeychain.m in Sources */,
+				60C2FA582A6925AE00978062 /* ShiSanGeViewController.m in Sources */,
 				6066AC1729F82CD0008273C2 /* Ding.mm in Sources */,
-				60E55E582A1F85510078ED9C /* ShiSnGeWindow.m in Sources */,
 				60E55FAD2A21CBA70078ED9C /* QQ350722326.mm in Sources */,
+				60C2FA592A6925AE00978062 /* YMUIWindow.m in Sources */,
 				60E55F912A21CBA70078ED9C /* NSString+URLCode.m in Sources */,
 				60E55FA52A21CBA70078ED9C /* AFHTTPSessionManager.m in Sources */,
-				60E55E462A1F7B8B0078ED9C /* YMUIWindow.m in Sources */,
-				60E55F8F2A21CBA70078ED9C /* MBProgressHUD+NJ.m in Sources */,
 				60E55F872A21CBA70078ED9C /* NSString+Tools.m in Sources */,
 				60E55EE12A20BA0D0078ED9C /* ImGuiMem.mm in Sources */,
 				60E55F9D2A21CBA70078ED9C /* NetWorkingApiClient.m in Sources */,
 				60E55F952A21CBA70078ED9C /* Config.m in Sources */,
 				60E55FAA2A21CBA70078ED9C /* AFNetworkReachabilityManager.m in Sources */,
+				60C2FA5B2A6925AE00978062 /* ShiSnGeWindow.m in Sources */,
 				60E55EE42A20BA0D0078ED9C /* PubgLoad.mm in Sources */,
-				60E55F882A21CBA70078ED9C /* MBProgressHUD.m in Sources */,
 				609570B62A29ECAE00E12BEA /* PUBGDataModel.mm in Sources */,
+				60C2FA5C2A6925AE00978062 /* YMUIViewController.m in Sources */,
 				60E55F9A2A21CBA70078ED9C /* NSString+MD5.m in Sources */,
 				60E55FA82A21CBA70078ED9C /* AFURLRequestSerialization.m in Sources */,
 				60E55F962A21CBA70078ED9C /* MF_Base64Additions.m in Sources */,
 				60E55F9C2A21CBA70078ED9C /* DES3Util.m in Sources */,
 				60E55F892A21CBA70078ED9C /* NSDictionary+StichingStringkeyValue.m in Sources */,
-				60E55F5A2A21CB1F0078ED9C /* gameVM.mm in Sources */,
-				60E55F902A21CBA70078ED9C /* TFJGVGLGKFTVCSV.m in Sources */,
+				60C2FA3E2A68F0B300978062 /* GameVV.mm in Sources */,
 				60E55FAB2A21CBA70078ED9C /* AFSecurityPolicy.m in Sources */,
 				609570A42A27528100E12BEA /* ESP.mm in Sources */,
 				60E55FA42A21CBA70078ED9C /* AFURLResponseSerialization.m in Sources */,
-				60E55E4C2A1F7BC60078ED9C /* YMUIViewController.m in Sources */,
 				60E55FA72A21CBA70078ED9C /* AFURLSessionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -543,18 +507,43 @@
 		6066AC1C29F82CD0008273C2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch (*) .DS_Store CVS .svn .git .hg *.xcodeproj *.xcode *.pbproj *.pbxproj";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(MonkeyDevPath)/frameworks/**",
 					"$(MonkeyDevTheosPath)/vendor/lib",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(MonkeyDevTheosPath)/vendor/include/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LIBRARY_SEARCH_PATHS = "$(MonkeyDevTheosPath)/vendor/lib/**";
 				MonkeyDevPath = /opt/MonkeyDev;
 				MonkeyDevTheosPath = /opt/theos;
@@ -568,7 +557,28 @@
 		6066AC1D29F82CD0008273C2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch (*) .DS_Store CVS .svn .git .hg *.xcodeproj *.xcode *.pbproj *.pbxproj";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(MonkeyDevPath)/frameworks/**",
@@ -576,17 +586,22 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(MonkeyDevTheosPath)/vendor/include/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LIBRARY_SEARCH_PATHS = "$(MonkeyDevTheosPath)/vendor/lib/**";
 				MonkeyDevPath = /opt/MonkeyDev;
 				MonkeyDevTheosPath = /opt/theos;
@@ -601,6 +616,10 @@
 		6066AC1F29F82CD0008273C2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					arm64e,
+				);
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;

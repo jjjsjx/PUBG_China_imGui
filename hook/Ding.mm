@@ -1,4 +1,4 @@
-#line 1 "/Users/shisange/Desktop/跨进程imgui/hook/Ding.xm"
+#line 1 "/Users/shisange/Desktop/IOSTest/IOSTest/IOSTest.xm"
 
 
 
@@ -41,10 +41,10 @@ static ShiSanGeViewController *controllerb = nil;
 #define _LOGOS_RETURN_RETAINED
 #endif
 
-@class SpringBoard; 
-static void (*_logos_orig$_ungrouped$SpringBoard$applicationDidFinishLaunching$)(_LOGOS_SELF_TYPE_NORMAL SpringBoard* _LOGOS_SELF_CONST, SEL, id); static void _logos_method$_ungrouped$SpringBoard$applicationDidFinishLaunching$(_LOGOS_SELF_TYPE_NORMAL SpringBoard* _LOGOS_SELF_CONST, SEL, id); 
+@class SpringBoard;
+static void (*_logos_orig$_ungrouped$SpringBoard$applicationDidFinishLaunching$)(_LOGOS_SELF_TYPE_NORMAL SpringBoard* _LOGOS_SELF_CONST, SEL, id); static void _logos_method$_ungrouped$SpringBoard$applicationDidFinishLaunching$(_LOGOS_SELF_TYPE_NORMAL SpringBoard* _LOGOS_SELF_CONST, SEL, id);
 
-#line 22 "/Users/shisange/Desktop/跨进程imgui/hook/Ding.xm"
+#line 22 "/Users/shisange/Desktop/IOSTest/IOSTest/IOSTest.xm"
 
 
 static void _logos_method$_ungrouped$SpringBoard$applicationDidFinishLaunching$(_LOGOS_SELF_TYPE_NORMAL SpringBoard* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, id application) {
@@ -66,4 +66,4 @@ static void _logos_method$_ungrouped$SpringBoard$applicationDidFinishLaunching$(
 
 static __attribute__((constructor)) void _logosLocalInit() {
 {Class _logos_class$_ungrouped$SpringBoard = objc_getClass("SpringBoard"); { MSHookMessageEx(_logos_class$_ungrouped$SpringBoard, @selector(applicationDidFinishLaunching:), (IMP)&_logos_method$_ungrouped$SpringBoard$applicationDidFinishLaunching$, (IMP*)&_logos_orig$_ungrouped$SpringBoard$applicationDidFinishLaunching$);}} }
-#line 41 "/Users/shisange/Desktop/跨进程imgui/hook/Ding.xm"
+#line 41 "/Users/shisange/Desktop/IOSTest/IOSTest/IOSTest.xm"

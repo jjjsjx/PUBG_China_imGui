@@ -1,39 +1,34 @@
 //
 //  PUBGDrawDataFactory.m
-//  十三哥 编写
+//  ChatsNinja
 //
-//  Created by yiming on 2023/05/23. 最少得代码 最全的功能
+//  Created by yiming on 2022/10/2.
 //
-#import "PUBGDataModel.h"
-#import "gameVM.h"
-#include "string"
-#include "ImGuiMem.h"
-#import "PUBGTypeHeader.h"
-#include <vector>
-#include <unordered_map>
-#include <random>
-#import "QQ350722326.h"
 #import "ESP.h"
-@interface gameVM()
+#import "GameVV.h"
+#include "string"
+#import "PUBGTypeHeader.h"
+#import "PUBGDataModel.h"
+#include <vector>
+#define kWidth  [UIScreen mainScreen].bounds.size.width
+#define kHeight [UIScreen mainScreen].bounds.size.height
+@interface GameVV()
 
 @property (nonatomic,  assign) FVector2D canvas;
-@property (nonatomic,strong) NSMutableArray * 人物缓存;
-@property (nonatomic,strong) NSMutableArray * 物资缓存;
+
 @end
 
-@implementation gameVM
+@implementation GameVV
 
 static mach_port_t task;
 bool wzkg;
-
 static FMinimalViewInfo POV;
-
-+ (instancetype)sharedInstance
++ (instancetype)factory
 {
-    static gameVM *fact;
+    static GameVV *fact;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        fact = [[gameVM alloc] init];
+        fact = [[GameVV alloc] init];
     });
     return fact;
 }
@@ -79,7 +74,6 @@ mach_vm_write(
               mach_vm_address_t                 address,
               pointer_t                         data,
               __unused mach_msg_type_number_t   size);
-
 #pragma mark - 进程相关=============
 #pragma mark - 读取进程pid
 int getProcesses(NSString *Name)
@@ -133,8 +127,7 @@ vm_map_offset_t getBaseAddress(mach_port_t task)
     
     return vmoffset;
 }
-
-#pragma mark - 地址判断
+#pragma mark - 内存封装============
 static BOOL isValidAddress(uintptr_t address)
 {
     if (address && address > 0x100000000 && address < kAddrMax) {
@@ -142,7 +135,15 @@ static BOOL isValidAddress(uintptr_t address)
     }
     return NO;
 }
-#pragma mark - 内存封装============
+static BOOL readMemory(uintptr_t address, size_t size ,void *buffer )
+{
+    mach_vm_size_t otu_size = 0;
+    kern_return_t error = mach_vm_read_overwrite((vm_map_t)task, (mach_vm_address_t)address, (mach_vm_size_t)size, (mach_vm_address_t)buffer, &otu_size);
+    if (error != KERN_SUCCESS || otu_size != size) {
+        return NO;
+    }
+    return YES;
+}
 static BOOL writeMemory(uintptr_t address, int size ,void *buffer )
 {
     if (!isValidAddress(address)) return NO;
@@ -152,15 +153,6 @@ static BOOL writeMemory(uintptr_t address, int size ,void *buffer )
         return NO;
     }
     
-    return YES;
-}
-static BOOL readMemory(uintptr_t address, size_t size ,void *buffer )
-{
-    mach_vm_size_t otu_size = 0;
-    kern_return_t error = mach_vm_read_overwrite((vm_map_t)task, (mach_vm_address_t)address, (mach_vm_size_t)size, (mach_vm_address_t)buffer, &otu_size);
-    if (error != KERN_SUCCESS || otu_size != size) {
-        return NO;
-    }
     return YES;
 }
 static kern_return_t read_mem(vm_map_offset_t address, mach_vm_size_t size, void *buffer)
@@ -238,8 +230,55 @@ static D3DXMATRIX toMATRIX(FRotator rot)
     
     return M;
 }
-
-
+- (BOOL)getInsideFov:(FVector2D)bone radius:(float)radius
+{
+    FVector2D Cenpoint;
+    Cenpoint.X = bone.X - (self.canvas.X / 2);
+    Cenpoint.Y = bone.Y - (self.canvas.Y / 2);
+    if (Cenpoint.X * Cenpoint.X + Cenpoint.Y * Cenpoint.Y <= radius * radius) {
+        return YES;
+    }
+    return NO;
+}
+- (FRotator)calcAngle:(FVector3D)aimPos
+{
+    FRotator rot;
+    rot.Yaw = ((float)(atan2f(aimPos.Y, aimPos.X)) * (float)(180.f / M_PI));
+    rot.Pitch = ((float)(atan2f(aimPos.Z,
+                                sqrtf(aimPos.X * aimPos.X +
+                                      aimPos.Y * aimPos.Y +
+                                      aimPos.Z * aimPos.Z))) * (float)(180.f / M_PI));
+    rot.Roll = 0.f;
+    return rot;
+}
+- (FRotator)clamp:(FRotator)Rotation
+{
+    if (Rotation.Yaw > 180.f) {
+        Rotation.Yaw -= 360.f;
+    } else if (Rotation.Yaw < -180.f) {
+        Rotation.Yaw += 360.f;
+    }
+    
+    if (Rotation.Pitch > 180.f) {
+        Rotation.Pitch -= 360.f;
+    } else if (Rotation.Pitch < -180.f) {
+        Rotation.Pitch += 360.f;
+    }
+    
+    if (Rotation.Pitch < -89.f) {
+        Rotation.Pitch = -89.f;
+    } else if (Rotation.Pitch > 89.f) {
+        Rotation.Pitch = 89.f;
+    }
+    
+    Rotation.Roll = 0.f;
+    
+    return Rotation;
+}
+- (int)getCenterOffsetForVector:(FVector2D)point
+{
+    return sqrt(pow(point.X - self.canvas.X/2, 2.0) + pow(point.Y - self.canvas.Y/2, 2.0));
+}
 
 #pragma mark - 世界坐标转屏幕2D坐标
 static void getTheAxes(FRotator rot, FVector3D *x, FVector3D *y, FVector3D *z){
@@ -287,6 +326,7 @@ static FVector2D worldToScreen(FVector3D worldLocation, FMinimalViewInfo camView
     
     return Screenlocation;
 }
+
 static FVectorRect worldToScreenForRect(FVector3D worldLocation, FMinimalViewInfo camViewInfo, FVector2D canvas)
 {
     FVectorRect rect;
@@ -308,7 +348,6 @@ static FVectorRect worldToScreenForRect(FVector3D worldLocation, FMinimalViewInf
     
     return rect;
 }
-
 #pragma mark - 游戏数据
 static char g_nameBuf[128];
 static NSString* getFNameFromID(uintptr_t gnamePtr, int classId){
@@ -467,110 +506,12 @@ static FVector3D getRelativeLocation(uintptr_t actor){
     readMemory(RootComponent + 0x1b0, sizeof(FVector3D), &value);
     return value;
 }
-#pragma mark - 追踪函数
-- (BOOL)getInsideFov:(FVector2D)bone radius:(float)radius
-{
-    FVector2D Cenpoint;
-    Cenpoint.X = bone.X - (self.canvas.X / 2);
-    Cenpoint.Y = bone.Y - (self.canvas.Y / 2);
-    if (Cenpoint.X * Cenpoint.X + Cenpoint.Y * Cenpoint.Y <= radius * radius) {
-        return YES;
-    }
-    return NO;
-}
-- (int)getCenterOffsetForVector:(FVector2D)point
-{
-    return sqrt(pow(point.X - self.canvas.X/2, 2.0) + pow(point.Y - self.canvas.Y/2, 2.0));
-}
-- (FRotator)calcAngle:(FVector3D)aimPos
-{
-    FRotator rot;
-    rot.Yaw = ((float)(atan2f(aimPos.Y, aimPos.X)) * (float)(180.f / M_PI));
-    rot.Pitch = ((float)(atan2f(aimPos.Z,
-                                sqrtf(aimPos.X * aimPos.X +
-                                      aimPos.Y * aimPos.Y +
-                                      aimPos.Z * aimPos.Z))) * (float)(180.f / M_PI));
-    rot.Roll = 0.f;
-    return rot;
-}
-- (FRotator)clamp:(FRotator)Rotation
-{
-    if (Rotation.Yaw > 180.f) {
-        Rotation.Yaw -= 360.f;
-    } else if (Rotation.Yaw < -180.f) {
-        Rotation.Yaw += 360.f;
-    }
-    
-    if (Rotation.Pitch > 180.f) {
-        Rotation.Pitch -= 360.f;
-    } else if (Rotation.Pitch < -180.f) {
-        Rotation.Pitch += 360.f;
-    }
-    
-    if (Rotation.Pitch < -89.f) {
-        Rotation.Pitch = -89.f;
-    } else if (Rotation.Pitch > 89.f) {
-        Rotation.Pitch = 89.f;
-    }
-    
-    Rotation.Roll = 0.f;
-    
-    return Rotation;
-}
 
-#pragma mark - 边缘函数
-static inline FVector2D FVector2DMake(CGFloat x, CGFloat y) {
-    return (FVector2D){x, y};
-}
-static inline FVector2D FVector2DSubtract(FVector2D A, FVector2D B) {
-    return (FVector2D){A.X - B.X, A.Y - B.Y};
-}
-- (FVector2D)convertToScreenCoordinate:(FVector2D)point {
-    
-    // 计算屏幕中心点坐标
-    FVector2D screenCenter = FVector2DMake((self.canvas.X) / 2.0, 50);
-    
-    // 计算玩家坐标相对于屏幕中心点的偏移量
-    FVector2D offset = FVector2DSubtract(point, screenCenter);
-    
-    // 如果玩家坐标超出屏幕范围，将其限制在屏幕边缘
-    // 首先计算屏幕边缘与中心点的连线的角度
-    CGFloat angle = atan2f(offset.Y, offset.X);
-    // 计算屏幕边缘的交汇点坐标
-    FVector2D intersectionPoint;
-    if (std::abs(angle) <= M_PI_4) {
-        // 如果玩家坐标在屏幕中央的左右两侧，交汇点在屏幕左右边缘
-        CGFloat x = (offset.X> 0) ? kWidth : 0;
-        CGFloat y = screenCenter.Y + offset.Y * (x - screenCenter.X) / offset.X;
-        intersectionPoint = FVector2DMake(x, y);
-    } else {
-        // 如果玩家坐标在屏幕中央的上下两侧，交汇点在屏幕上下边缘
-        CGFloat y = (offset.Y > 0) ? kHeight : 0;
-        CGFloat x = screenCenter.X + offset.X * (y - screenCenter.Y) / offset.Y;
-        if (y>kHeight) {
-            y=kHeight-20;
-        }
-        if (y<0) {
-            y=20;
-        }
-        if (x<0) {
-            x=130;
-        }
-        if (x>kWidth) {
-            x=kWidth-130;
-        }
-        intersectionPoint = FVector2DMake(x, y);
-    }
-    
-    // 将交汇点坐标转换为屏幕坐标并返回
-    return intersectionPoint;
-}
-
-#pragma mark - 读取游戏进程 数据-PID Task
+#pragma mark - 读取游戏数据-OC
 static uintptr_t Gworld;
 static uintptr_t GName;
 static uintptr_t GBase;
-static NSTimer *timer;
+//读取进程
 bool getGame(){
     NSString*gameName = @"ShadowTrackerExt";
     pid_t gamePid = getProcesses(gameName);
@@ -578,245 +519,62 @@ bool getGame(){
         task = getTask(gamePid);
         if (task) {
             GBase = getBaseAddress(task);
-            if (isValidAddress(GBase)){
+            if (GBase) {
                 // 读取世界
                 Gworld = Read<uintptr_t>(GBase + 0xB064888);
                 GName = Read<uintptr_t>(GBase + 0xACBF728);
-                if (isValidAddress(Gworld)){
-                    return YES;
-                }
-                
-                
+                return YES;
             }
-            
         }
     }
     
     return NO;
 }
+//读取玩家数组
+static NSArray *drArray;
+static NSArray *wzArray;
 
-#pragma mark - 遍历玩家数据
-//读取遍历对象 物资数组 可以1秒一次极大减少内存和重复基础读取不变基址
-- (void)CacheData {
-    self.人物缓存=NULL;
-    self.人物缓存 = @[].mutableCopy;
-    self.物资缓存=NULL;
-    self.物资缓存 = @[].mutableCopy;
+- (void)getNSArray {
+    if (!绘制总开关)return;;
+    NSMutableArray *drtempArr = [NSMutableArray array];
+    NSMutableArray *wztempArr = [NSMutableArray array];
+    static NSString*wzName=nil;//声明函数内全局变量
     Gworld = Read<uintptr_t>(GBase + 0xB064888);
     GName = Read<uintptr_t>(GBase + 0xACBF728);
+    if (!isValidAddress(Gworld))return;
+    
     const float hpValues[] = {100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200};
     const int hpValueCount = sizeof(hpValues) / sizeof(float);
-    // 获取视角信息
-    uintptr_t NetDriver = Read<uintptr_t>(Gworld + 0x98);
-    uintptr_t ServerConnection = Read<uintptr_t>(NetDriver + 0x88);
-    uintptr_t PlayerController = Read<uintptr_t>(ServerConnection + 0x30);
-    uintptr_t mySelf = Read<uintptr_t>(PlayerController + 0x6d0);
-    
-    uint64_t level = Read<uintptr_t>(Gworld + 0x90);
-    uint64_t actorArray = Read<uintptr_t>(level + 0xA0);
-    int actorCount = Read<int>(level + 0xA8);
-    static NSString*wzName=nil;//声明函数内全局变量
-    for (int i = 0; i < actorCount; i++) {
-        uintptr_t player = Read<uintptr_t>(actorArray + i * 8);
-        int FNameID = Read<int>(player + 0x18);
-        NSString* ClassName = getFNameFromID(GName, FNameID);
-        //不包含PlayerPawn的都是物质
-        if (![ClassName containsString:@"PlayerPawn"]) {
-            if(物资总开关){
-                PUBGPlayerWZ *model=[[PUBGPlayerWZ alloc] init];
-                if (物资调试开关) {
-                    FVector3D WorldLocation = getRelativeLocation(player);
-                    float juli = getDistance(WorldLocation, POV.Location) / 100;
-                    //调试模式仅10米内物资
-                    if (juli<10) {
-                        model.Name=ClassName;//调试模式下 直接吧模型名字添加到物资名字进行绘制 方便自己识别记住名字登记
-                        model.Player=player;//储存物资编号
-                        [self.物资缓存 addObject:model];
-                    }
-                    
-                }else{
-                    //优先吧最常见的 的东西 最长开的东西放在前面 当多个开关开启时 因为物资都在附近10米左右 避免先进行无效物资匹配
-                    if (投掷物开关 || 手雷预警开关) {
-                        //判断字符串包含 手雷 闪光 获取 后期铝热蛋等自己调试模式添加
-                        if ([ClassName containsString:@"Grenade"] ||
-                            [ClassName containsString:@"Fire"] ||
-                            [ClassName containsString:@"Burn"]){
-                            model.Name=@"雷";//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            model.Fenlei=0;
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                        
-                    }
-                    if (高级物资开关 ) {
-                        wzName=[self reName:ClassName ID:8];
-                        if(wzName){
-                            model.Fenlei=8;
-                            model.Name=[self reName:ClassName ID:8];//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                    }
-                    if (药品开关 ) {
-                        wzName=[self reName:ClassName ID:2];
-                        if(wzName){
-                            model.Fenlei=2;
-                            model.Name=wzName;//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                    }
-                    if (枪械开关 ) {
-                        wzName=[self reName:ClassName ID:4];
-                        if(wzName){
-                            model.Fenlei=4;
-                            model.Name=wzName;//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                    }
-                    if (载具开关 ) {
-                        wzName=[self reName:ClassName ID:1];
-                        if(wzName){
-                            model.Fenlei=1;
-                            model.Name=wzName;//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                            
-                        }
-                    }
-                    if (配件开关 ) {
-                        wzName=[self reName:ClassName ID:5];
-                        if(wzName){
-                            model.Fenlei=5;
-                            model.Name=wzName;//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                    }
-                    if (倍镜开关 ) {
-                        wzName=[self reName:ClassName ID:9];
-                        if(wzName){
-                            model.Fenlei=9;
-                            model.Name=wzName;//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                    }
-                    if (头盔开关 ) {
-                        wzName=[self reName:ClassName ID:10];
-                        if(wzName){
-                            model.Fenlei=10;
-                            model.Name=wzName;//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                    }
-                    if (护甲开关 ) {
-                        wzName=[self reName:ClassName ID:11];
-                        if(wzName){
-                            model.Fenlei=11;
-                            model.Name=wzName;//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                    }
-                    if (背包开关 ) {
-                        wzName=[self reName:ClassName ID:12];
-                        if(wzName){
-                            model.Fenlei=12;
-                            model.Name=wzName;//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                    }
-                    if (子弹开关 ) {
-                        wzName=[self reName:ClassName ID:6];
-                        if(wzName){
-                            model.Fenlei=6;
-                            model.Name=wzName;//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                    }
-                    if (其他物资开关 ) {
-                        wzName=[self reName:ClassName ID:7];
-                        if(wzName){
-                            model.Fenlei=7;
-                            model.Name=wzName;//储存查询到的真正名字字符串
-                            model.Player=player;//储存物资编号
-                            [self.物资缓存 addObject:model];//匹配到就添加到数组
-                            continue;//添加会记得跳出本次匹配 避免执行后面的if
-                        }
-                    }
-                   
-                }
-            }
-            
-        }else{
-            //玩家
-            float hpmax = Read<float>(player + 0xd68);
-            for (int j = 0; j < hpValueCount; j++) {
-                if (hpmax == hpValues[j]) {
-                    bool bDead = Read<bool>(player + 0xdc8) & 1;
-                    if (bDead) continue;
-                    //排除自己
-                    if (player == mySelf) continue;
-                    int TeamID = Read<int>(player + 0xa48);
-                    int MyTeamID = Read<int>(PlayerController + 0x9a8);
-                    if (TeamID == MyTeamID) continue;
-                    //存储玩家数组
-                    [self.人物缓存 addObject:@(player)];
-                    continue;//添加玩家后就下一个玩家了 跳出本次循环
-                }
-            }
-        }
-        
-        
-    }
-    
-}
-
-//开始读取玩家数据
-- (void)getData:(PUBGBlock)block {
-    
-    //初始化骨骼关节点
-    static int Bones[18] = {6,5,4,3,2,1,12,13,14,33,34,35,53,54,55,57,58,59};
-    static FVector2D Bones_Pos[18];
     
     // 获取视角信息
     uintptr_t NetDriver = Read<uintptr_t>(Gworld + 0x98);
+    
     uintptr_t ServerConnection = Read<uintptr_t>(NetDriver + 0x88);
+    
     uintptr_t PlayerController = Read<uintptr_t>(ServerConnection + 0x30);
-    uintptr_t mySelf = Read<uintptr_t>(PlayerController + 0x6d0);
-    //无后座相关
+    
     uintptr_t PlayerCameraManager = Read<uintptr_t>(PlayerController + 0x5c0);
+   
     readMemory(PlayerCameraManager + 0x1140 + 0x10, sizeof(FMinimalViewInfo), &POV);
-    uintptr_t WeaponManagerComponent =Read<uintptr_t>(mySelf+ 0x24e0);
-    uintptr_t CurrentWeaponReplicated =Read<uintptr_t>(WeaponManagerComponent+ 0x728);
-    uintptr_t ShootWeaponEntityComp=Read<uintptr_t>(CurrentWeaponReplicated+ 0x12f8);
+    
+    //无后座相关
+    uintptr_t mySelf = Read<uintptr_t>(PlayerController + 0x530);
+    uintptr_t WeaponManagerComponent =Read<uintptr_t>(mySelf+ 0x2780);
+    uintptr_t CurrentWeaponReplicated =Read<uintptr_t>(WeaponManagerComponent+ 0x568);
+    uintptr_t ShootWeaponEntityComp=Read<uintptr_t>(CurrentWeaponReplicated+ 0x11b8);
     if(无后座开关){
         float RecoilKickADS = 0.001;
-        writeMemory(ShootWeaponEntityComp + 0x16a0, sizeof(float), &RecoilKickADS);
-        writeMemory(ShootWeaponEntityComp + 0x16ac, sizeof(float), &RecoilKickADS);
+        writeMemory(ShootWeaponEntityComp + 0x1718, sizeof(float), &RecoilKickADS);
     }
     if (聚点开关) {
         float judian1 = 0.01;
-        writeMemory(ShootWeaponEntityComp + 0x16fc, sizeof(float), &judian1);
-        writeMemory(ShootWeaponEntityComp + 0x1700, sizeof(float), &judian1);
-        writeMemory(ShootWeaponEntityComp + 0x1704, sizeof(float), &judian1);
-        writeMemory(ShootWeaponEntityComp + 0x1708, sizeof(float), &judian1);
+        writeMemory(ShootWeaponEntityComp + 0x1848, sizeof(float), &judian1);
+        writeMemory(ShootWeaponEntityComp + 0x1864, sizeof(float), &judian1);
+        writeMemory(ShootWeaponEntityComp + 0x177c, sizeof(float), &judian1);
+        writeMemory(ShootWeaponEntityComp + 0x1780, sizeof(float), &judian1);
+        writeMemory(ShootWeaponEntityComp + 0x1784, sizeof(float), &judian1);
+        writeMemory(ShootWeaponEntityComp + 0x1788, sizeof(float), &judian1);
+        
                     
     }
     if (防抖开关) {
@@ -830,14 +588,225 @@ bool getGame(){
         writeMemory(ShootWeaponEntityComp + 0x16f8, sizeof(float), &fangdou);
        
     }
+    
+    uint64_t level = Read<uintptr_t>(Gworld + 0x90);
+    uint64_t actorArray = Read<uintptr_t>(level + 0xA0);
+    int actorCount = Read<int>(level + 0xA8);
+    
+    for (int i = 0; i < actorCount; i++) {
+        uintptr_t player = Read<uintptr_t>(actorArray + i * 8);
+        if (!player) continue;
+        int FNameID = Read<int>(player + 0x18);
+        NSString* ClassName = getFNameFromID(GName, FNameID);
+        if (![ClassName containsString:@"PlayerPawn"]) {
+            if(物资总开关){
+                PUBGPlayerWZ *model=[[PUBGPlayerWZ alloc] init];
+                if (物资调试开关) {
+                    FVector3D WorldLocation = getRelativeLocation(player);
+                    float juli = getDistance(WorldLocation, POV.Location) / 100;
+                    //调试模式仅10米内物资
+                    if (juli<10) {
+                        model.Name=ClassName;//调试模式下 直接吧模型名字添加到物资名字进行绘制 方便自己识别记住名字登记
+                        model.Player=player;//储存物资编号
+                        [wztempArr addObject:model];
+                    }
+                    
+                }else{
+                    //优先吧最常见的 的东西 最长开的东西放在前面 当多个开关开启时 因为物资都在附近10米左右 避免先进行无效物资匹配
+                    if (投掷物开关 || 手雷预警开关) {
+                        //判断字符串包含 手雷 闪光 获取 后期铝热蛋等自己调试模式添加
+                        if ([ClassName containsString:@"Grenade"] ||
+                            [ClassName containsString:@"Fire"] ||
+                            [ClassName containsString:@"Burn"]){
+                            model.Name=@"雷";//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            model.Fenlei=0;
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                        
+                    }
+                    if (高级物资开关 ) {
+                        wzName=[self reName:ClassName ID:8];
+                        if(wzName){
+                            model.Fenlei=8;
+                            model.Name=[self reName:ClassName ID:8];//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                    }
+                    if (药品开关 ) {
+                        wzName=[self reName:ClassName ID:2];
+                        if(wzName){
+                            model.Fenlei=2;
+                            model.Name=wzName;//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                    }
+                    if (枪械开关 ) {
+                        wzName=[self reName:ClassName ID:4];
+                        if(wzName){
+                            model.Fenlei=4;
+                            model.Name=wzName;//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                    }
+                    if (载具开关 ) {
+                        wzName=[self reName:ClassName ID:1];
+                        if(wzName){
+                            model.Fenlei=1;
+                            model.Name=wzName;//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                            
+                        }
+                    }
+                    if (配件开关 ) {
+                        wzName=[self reName:ClassName ID:5];
+                        if(wzName){
+                            model.Fenlei=5;
+                            model.Name=wzName;//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                    }
+                    if (倍镜开关 ) {
+                        wzName=[self reName:ClassName ID:9];
+                        if(wzName){
+                            model.Fenlei=9;
+                            model.Name=wzName;//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                    }
+                    if (头盔开关 ) {
+                        wzName=[self reName:ClassName ID:10];
+                        if(wzName){
+                            model.Fenlei=10;
+                            model.Name=wzName;//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                    }
+                    if (护甲开关 ) {
+                        wzName=[self reName:ClassName ID:11];
+                        if(wzName){
+                            model.Fenlei=11;
+                            model.Name=wzName;//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                    }
+                    if (背包开关 ) {
+                        wzName=[self reName:ClassName ID:12];
+                        if(wzName){
+                            model.Fenlei=12;
+                            model.Name=wzName;//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                    }
+                    if (子弹开关 ) {
+                        wzName=[self reName:ClassName ID:6];
+                        if(wzName){
+                            model.Fenlei=6;
+                            model.Name=wzName;//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                    }
+                    if (其他物资开关 ) {
+                        wzName=[self reName:ClassName ID:7];
+                        if(wzName){
+                            model.Fenlei=7;
+                            model.Name=wzName;//储存查询到的真正名字字符串
+                            model.Player=player;//储存物资编号
+                            [wztempArr addObject:model];//匹配到就添加到数组
+                            continue;//添加会记得跳出本次匹配 避免执行后面的if
+                        }
+                    }
+                   
+                }
+            }
+            
+        }else{
+            bool bDead = Read<bool>(player + 0xdc8) & 1;
+            if (bDead) continue;
+            float hpmax = Read<float>(player + 0xd68);
+            for (int j = 0; j < hpValueCount; j++) {
+                if (hpmax == hpValues[j]) {
+                    [drtempArr addObject:@(player)];//存储玩家数组
+                }
+                
+            }
+        }
+    }
+    drArray = [drtempArr copy];
+    wzArray = [wztempArr copy];
+    
+    
+}
+//读取玩家
+
+
+- (NSMutableArray*)getData {
+    
+    static int Bones[18] = {6,5,4,3,2,1,12,13,14,33,34,35,53,54,55,57,58,59};
+    static FVector2D Bones_Pos[18];
+    
     // 初始化玩家字典
     NSMutableArray *playerArray = @[].mutableCopy;//玩家字典
-    NSMutableArray *wzArray = @[].mutableCopy;//物资字典
-    for (NSNumber *Player in self.人物缓存) {
-        uintptr_t player = [Player unsignedIntegerValue];
-        PUBGPlayerModel *model = [[PUBGPlayerModel alloc] init];
-        //获取地图3D坐标
+    if (!绘制总开关)return playerArray;;
+    // 获取视角信息
+    uintptr_t NetDriver = Read<uintptr_t>(Gworld + 0x98);
+    if (!isValidAddress(NetDriver))return playerArray;
+    uintptr_t ServerConnection = Read<uintptr_t>(NetDriver + 0x88);
+    if (!isValidAddress(ServerConnection))return playerArray;
+    uintptr_t PlayerController = Read<uintptr_t>(ServerConnection + 0x30);
+    uintptr_t MyTeamID = Read<uintptr_t>(PlayerController + 0x9a8);
+    uintptr_t PlayerCameraManager = Read<uintptr_t>(PlayerController + 0x5c0);
+    if (!isValidAddress(PlayerCameraManager))return playerArray;
+    readMemory(PlayerCameraManager + 0x1140 + 0x10, sizeof(FMinimalViewInfo), &POV);
+    
+    
+    
+    for (int i = 0; i < drArray.count; i++) {
+        uintptr_t player = [drArray[i] unsignedLongLongValue];
+        if (!isValidAddress(player))continue;
+        bool bDead = Read<bool>(player + 0xdc8) & 1;
+        if (bDead) continue;
+        PUBGPlayerModel *model=[[PUBGPlayerModel alloc] init];
+        // 读取玩家模型数据
+        
+        model.PlayerName = getPlayerName(player);
+        if (model.PlayerName.length < 1) continue;
+        model.TeamID = Read<int>(player + 0xa48);
+        // 判断自己和队友
+        if (model.TeamID == MyTeamID) continue;
+        
+        model.isAI = Read<BOOL>(player + 0xa64) != 0;
+        model.Health = Read<float>(player + 0xd60) / Read<float>(player + 0xd68) * 100;
+        if (model.isAI) model.PlayerName = @"Ai_人机";
+        
+        // 计算距离
         FVector3D WorldLocation = getRelativeLocation(player);
+        if (WorldLocation.X<0 || WorldLocation.Y<0) continue;
+        if (距离开关) {
+            model.Distance = getDistance(WorldLocation, POV.Location) / 100;
+        }
+        
         //玩家方框
         model.rect=worldToScreenForRect(WorldLocation, POV, self.canvas);
         //屏幕外面就只绘制射线 只获取方框就行 避免读取其他数据无用功 if(屏幕里面)continue; 添加数组后跳出当前玩家
@@ -846,44 +815,25 @@ bool getGame(){
             [playerArray addObject:model];//添加到模型
             continue;//添加到玩家模型后跳出循环下一个玩家
         }
-        
-        
-        //以下是屏幕里面 正常读取其他数据
-        // 计算距离
-        model.Distance = getDistance(WorldLocation, POV.Location) / 100;
-        //判断迷雾 距离为负数或者0 距离超过500米 跳过本次玩家
-        if (model.Distance<=0 || model.Distance>500) continue;
-        //判断迷雾 超出地图外面 跳出循环
-        if (WorldLocation.X<0 || WorldLocation.Y<0) continue;
-        //人机
-        model.isAI = Read<BOOL>(player + 0xa64) != 0;
-        //标记为屏幕里面
-        model.isPm=YES;
-        //血量 判断血量开关开启才去计算血量 避免浪费资源
-        if (血条开关) {
-            model.Health = Read<float>(player + 0xd60) / Read<float>(player + 0xd68) * 100;
+        if (手持武器开关) {
+            int WeaponId = 0;
+            uintptr_t WeaponManagerComponent =Read<uintptr_t>(player+ 0x2780);
+            uintptr_t CurrentWeaponReplicated = Read<uintptr_t>(WeaponManagerComponent+0x568);
+            uintptr_t MyShootWeaponEntityComp = Read<uintptr_t>(CurrentWeaponReplicated+0x11b8);
+            WeaponId= Read<int>(MyShootWeaponEntityComp+0x110);
+            model.WeaponName=[self souchistr:WeaponId];
         }
-        //名字 读取名字转字符串 比较占用资源 判断名字开启才去读取名字 并且根据ai 更名
-        if (名字开关) {
-            model.PlayerName = getPlayerName(player);
-            if (model.PlayerName.length < 1) continue;
-            if (model.isAI) model.PlayerName = @"Ai_人机";
-            //队标 和名字一起显示的 所以在名字开关里
-            model.TeamID = Read<int>(player + 0xa48);
-        }
+       
         
-        
-        //骨骼===========================
+       
+        // 计算骨骼位置
         uintptr_t Mesh = Read<uintptr_t>(player + 0x5b8);
-        FTransform RelativeScale3D = getMatrixConversion(Mesh + 0x194 +0xC);
-        
-        // 骨骼有很多关节点都要把3D转屏幕坐标 占用资源 开关开启才去计算
+        FTransform RelativeScale3D = getMatrixConversion(Mesh + 0x1A0);
         if (骨骼开关) {
-            //循环18个骨骼关节点
+            
             for (int j = 0; j < 18; j++) {
                 FVector3D boneWorldLocation = getBoneWithRotation(Mesh, Bones[j], RelativeScale3D);
                 Bones_Pos[j] = worldToScreen(boneWorldLocation, POV, self.canvas);
-                
             }
             //循环完毕 骨骼点储存到玩家模型
             model._0 = Bones_Pos[0];
@@ -906,220 +856,152 @@ bool getGame(){
             model._17 = Bones_Pos[17];
         }
         
-        //追踪 开关 和函数逻辑
-        if(追踪开关){
-            FVector3D AimbotWorldLocation = getBoneWithRotation(Mesh, 追踪部位, RelativeScale3D);
-            FVector2D AimbotScreenLocation = worldToScreen(AimbotWorldLocation, POV, self.canvas);
-            float markDistance = self.canvas.X;
-            CGPoint markScreenPos = CGPointMake(self.canvas.X/2, self.canvas.Y/2);
-            if ([self getInsideFov:AimbotScreenLocation radius:追踪圆圈 ]) {
-                int tDistance = [self getCenterOffsetForVector:AimbotScreenLocation];
-                if (tDistance <= 追踪圆圈 && tDistance < markDistance) {
-                    markDistance = tDistance;
-                    markScreenPos.x = AimbotScreenLocation.X;
-                    markScreenPos.y = AimbotScreenLocation.Y;
-                    // 自己枪械开镜或者开火
-                    BOOL bIsWeaponFiring = Read<bool>(mySelf + 0x1a08);
-                    BOOL bIsGunADS = Read<bool>(mySelf + 0x1208);
-                    if (bIsWeaponFiring || bIsGunADS ) {
-                        // 自瞄目标距离
-                        float distance = getDistance(AimbotWorldLocation, POV.Location) / 100;
-                        
-                        float temp = 1.23f;
-                        float Gravity = 5.72f;
-                        
-                        if (distance < 5000.f)       temp = 1.8f;  else if (distance < 10000.f) temp = 1.72f;
-                        else if (distance < 15000.f) temp = 1.23f; else if (distance < 20000.f) temp = 1.24f;
-                        else if (distance < 25000.f) temp = 1.25f; else if (distance < 30000.f) temp = 1.26f;
-                        
-                        uintptr_t WeaponManagerComponent =Read<uintptr_t>(mySelf+ 0x24e0);
-                        uintptr_t CurrentWeaponReplicated =Read<uintptr_t>(WeaponManagerComponent+ 0x728);
-                        uintptr_t ShootWeaponEntityComp=Read<uintptr_t>(CurrentWeaponReplicated+ 0x12f8);
-                        float BulletFireSpeed = Read<float>(ShootWeaponEntityComp + 0x130c);
-                        
-                        float BulletFlyTime = distance / BulletFireSpeed;
-                        float secFlyTime = BulletFlyTime * temp;
-                        
-                        // 目标移动速度
-                        
-                        FVector3D VelocitySafty = Read<FVector3D>(player + 0xfb4);
-                        
-                        // 预判目标位置
-                        FVector3D delta;
-                        delta.X = VelocitySafty.X * secFlyTime;
-                        delta.Y = VelocitySafty.Y * secFlyTime;
-                        delta.Z = VelocitySafty.Z * secFlyTime;
-                        
-                        if (distance > 10000.f) {
-                            delta.Z += 0.5 * Gravity * BulletFlyTime * BulletFlyTime * 5.0f;
-                        }
-                        
-                        FVector3D targetlocation;
-                        targetlocation.X = AimbotWorldLocation.X - POV.Location.X + delta.X;
-                        targetlocation.Y = AimbotWorldLocation.Y - POV.Location.Y + delta.Y;
-                        targetlocation.Z = AimbotWorldLocation.Z - POV.Location.Z + delta.Z;
-                        
-                        // 目标位置角度
-                        FRotator Rotation = [self calcAngle:targetlocation];
-                        
-                        // 自己位置角度
-                        FRotator ControlRotation;
-                        
-                        readMemory(PlayerController + 0x6f8, sizeof(FRotator), &ControlRotation);
-                        
-                        // 平滑自瞄角度
-                        FRotator clampRotation;
-                        clampRotation.Yaw = Rotation.Yaw - ControlRotation.Yaw;
-                        clampRotation.Pitch = Rotation.Pitch - ControlRotation.Pitch;
-                        clampRotation.Roll = Rotation.Roll - ControlRotation.Roll;
-                        
-                        FRotator aimbotRotation;
-                        aimbotRotation.Yaw = ControlRotation.Yaw + [self clamp:clampRotation].Yaw * 自瞄速度;
-                        aimbotRotation.Pitch = ControlRotation.Pitch + [self clamp:clampRotation].Pitch * 自瞄速度;
-                        float pitch = atan2f(targetlocation.Z, sqrt(pow(targetlocation.X, 2) + pow(targetlocation.Y, 2))) * 57.29577951308f;
-                        float yaw = atan2f(targetlocation.Y, targetlocation.X) * 57.29577951308f;
-                        
-                        
-                        float Yaw = aimbotRotation.Yaw;
-                        float Pitch = aimbotRotation.Pitch;
-                        if (!isnan(Yaw) && !isnan(Pitch)) {
-                            
-                            // 开火自瞄
-                            if(自瞄开关){
-                                if(model.Health!=0 && bIsGunADS && model.Distance<=追踪距离)
-                                {
-                                    //开镜自瞄
-                                    
-                                    writeMemory(PlayerController + 0x6f8, sizeof(float), &Pitch);
-                                    
-                                    writeMemory(PlayerController + 0x6f8+ 4, sizeof(float), &Yaw);
-                                }
-                                if (model.Health!=0 && model.Distance<=追踪距离) {
-                                    
-                                    //开火自瞄
-                                    
-                                    writeMemory(PlayerController + 0x6f8, sizeof(float), &Pitch);
-                                    
-                                    writeMemory(PlayerController + 0x6f8+ 4, sizeof(float), &Yaw);
-                                    
-                                    
-                                
-                                    
-                                }
-                            }
-                            if(追踪开关){
-                                if ( model.Distance <= 追踪距离) {
-                                    
-                                    writeMemory(PlayerCameraManager + 0x768, sizeof(float), &pitch);
-                                    
-                                    writeMemory(PlayerCameraManager + 0x768 + 4, sizeof(float), &yaw);
-                                    
-                                }
-                                
-                            }
-                        }
+        FVector3D AimbotWorldLocation = getBoneWithRotation(Mesh, 追踪部位, RelativeScale3D);
+        FVector2D AimbotScreenLocation = worldToScreen(AimbotWorldLocation, POV, self.canvas);
+        float markDistance = self.canvas.X;
+        CGPoint markScreenPos = CGPointMake(self.canvas.X/2, self.canvas.Y/2);
+        if ([self getInsideFov:AimbotScreenLocation radius:追踪圆圈]) {
+            int tDistance = [self getCenterOffsetForVector:AimbotScreenLocation];
+            if (tDistance <= 追踪圆圈 && tDistance < markDistance) {
+                markDistance = tDistance;
+                markScreenPos.x = AimbotScreenLocation.X;
+                markScreenPos.y = AimbotScreenLocation.Y;
+                // 自己枪械开镜或者开火
+               
+                uintptr_t Character = Read<uintptr_t>(PlayerController + 0x538);
+                BOOL bIsWeaponFiring = Read<bool>(Character + 0x1c48);
+                BOOL bIsGunADS = Read<bool>(Character + 0x13f8);
+                if (bIsWeaponFiring || bIsGunADS ) {
+                    // 自瞄目标距离
+                    float distance = getDistance(AimbotWorldLocation, POV.Location) / 100;
+                    
+                    float temp = 1.23f;
+                    float Gravity = 5.72f;
+                    
+                    if (distance < 5000.f)       temp = 1.8f;  else if (distance < 10000.f) temp = 1.72f;
+                    else if (distance < 15000.f) temp = 1.23f; else if (distance < 20000.f) temp = 1.24f;
+                    else if (distance < 25000.f) temp = 1.25f; else if (distance < 30000.f) temp = 1.26f;
+                    uintptr_t WeaponManagerComponent =Read<uintptr_t>(player+ 0x2780);
+                    uintptr_t CurrentWeaponReplicated = Read<uintptr_t>(WeaponManagerComponent+0x568);
+                    uintptr_t ShootWeaponEntityComp = Read<uintptr_t>(CurrentWeaponReplicated+0x11b8);
+                    
+                    float BulletFireSpeed = Read<float>(ShootWeaponEntityComp + 0x12e4);
+                    
+                    float BulletFlyTime = distance / BulletFireSpeed;
+                    float secFlyTime = BulletFlyTime * temp;
+                    
+                    // 目标移动速度
+                    
+                    FVector3D VelocitySafty = Read<FVector3D>(player + 0xe4c);
+                    
+                    // 预判目标位置
+                    FVector3D delta;
+                    delta.X = VelocitySafty.X * secFlyTime;
+                    delta.Y = VelocitySafty.Y * secFlyTime;
+                    delta.Z = VelocitySafty.Z * secFlyTime;
+                    
+                    if (distance > 10000.f) {
+                        delta.Z += 0.5 * Gravity * BulletFlyTime * BulletFlyTime * 5.0f;
                     }
                     
+                    FVector3D targetlocation;
+                    targetlocation.X = AimbotWorldLocation.X - POV.Location.X + delta.X;
+                    targetlocation.Y = AimbotWorldLocation.Y - POV.Location.Y + delta.Y;
+                    targetlocation.Z = AimbotWorldLocation.Z - POV.Location.Z + delta.Z;
                     
+                    // 目标位置角度
+                    FRotator Rotation = [self calcAngle:targetlocation];
+                    
+                    // 自己位置角度
+                    FRotator ControlRotation;
+                    
+                    readMemory(PlayerController + 0x560, sizeof(FRotator), &ControlRotation);
+                    
+                    // 平滑自瞄角度
+                    FRotator clampRotation;
+                    clampRotation.Yaw = Rotation.Yaw - ControlRotation.Yaw;
+                    clampRotation.Pitch = Rotation.Pitch - ControlRotation.Pitch;
+                    clampRotation.Roll = Rotation.Roll - ControlRotation.Roll;
+                    
+                    FRotator aimbotRotation;
+                    aimbotRotation.Yaw = ControlRotation.Yaw + [self clamp:clampRotation].Yaw * 自瞄速度;
+                    aimbotRotation.Pitch = ControlRotation.Pitch + [self clamp:clampRotation].Pitch * 自瞄速度;
+                    float pitch = atan2f(targetlocation.Z, sqrt(pow(targetlocation.X, 2) + pow(targetlocation.Y, 2))) * 57.29577951308f;
+                    float yaw = atan2f(targetlocation.Y, targetlocation.X) * 57.29577951308f;
+                    
+                    
+                    float Yaw = aimbotRotation.Yaw;
+                    float Pitch = aimbotRotation.Pitch;
+                    if (!isnan(Yaw) && !isnan(Pitch)) {
+                        
+                        // 开火自瞄
+                        if(自瞄开关){
+                            if(model.Health!=0 && bIsGunADS && model.Distance<=追踪距离)
+                            {
+                                //开镜自瞄
+                                writeMemory(PlayerController + 0x560, sizeof(float), &Pitch);
+                                
+                                writeMemory(PlayerController + 0x560+ 4, sizeof(float), &Yaw);
+                            }
+                            if (model.Health!=0 && model.Distance<=追踪距离) {
+                                
+                                //开火自瞄
+                                
+                                writeMemory(PlayerController + 0x560, sizeof(float), &Pitch);
+                                
+                                writeMemory(PlayerController + 0x560+ 4, sizeof(float), &Yaw);
+                                
+                            }
+                        }
+                        if(追踪开关){
+                            if ( model.Distance <= 追踪距离) {
+                                
+                                writeMemory(PlayerCameraManager + 0x5c8, sizeof(float), &pitch);
+                                
+                                writeMemory(PlayerCameraManager + 0x5c8 + 4, sizeof(float), &yaw);
+                                
+                            }
+                            
+                        }
+                    }
                 }
                 
+                
             }
-        }
-        
-        //读取持枪数据
-        if (手持武器开关) {
-            int WeaponId = 0;
-            uintptr_t WeaponManagerComponent =Read<uintptr_t>(player+ 0x24e0);
-            uintptr_t CurrentWeaponReplicated = Read<uintptr_t>(WeaponManagerComponent+0x728);
-            uintptr_t MyShootWeaponEntityComp = Read<uintptr_t>(CurrentWeaponReplicated+0x12f8);
-            WeaponId= Read<int>(MyShootWeaponEntityComp+0x148);
-            model.WeaponName=[self souchistr:WeaponId];
+            
         }
         
         //添加到模型
+        model.isPm=YES;
         [playerArray addObject:model];
-        
-        
     }
+    return playerArray;
     
-    for (int i=0;i<self.物资缓存.count;i++){
-        PUBGPlayerWZ *model=self.物资缓存[i];
-        uintptr_t player = model.Player;
-        //玩家字典那是1秒一次的 真正绘制可能0.01秒 所以这里要从新更新物资的具体屏幕坐标
-        FVector3D WorldLocation = getRelativeLocation(player);
-        model.JuLi = getDistance(WorldLocation, POV.Location) / 100;// 储存计算距离
-        model.WuZhi2D=worldToScreen(WorldLocation, POV, self.canvas);//存储物资屏幕坐标系
-        //例外情况 当开启调试模式 只进行10米没的物资调试
-        if (物资调试开关 && model.JuLi <10) {
-            [wzArray addObject:model];//添加到数组
-            continue;//跳到下一个物资
-        }
-        //最后添加到物资字典
-        [wzArray addObject:model];
-    }
-    //物资和玩家都添加完毕 推送给绘制函数进行绘制
-    if (block) {
-        block(playerArray,wzArray);
-    }
     
 }
 
-#pragma mark - 物资相关=======
-//手持武器优化
-- (NSString*)souchistr:(int)wqid{
-    static NSDictionary *souchiNames = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        souchiNames = @{
-            @(0): @"拳头",
-            @(101001): @"AKM",
-            @(101002): @"M16A-4",
-            @(101003): @"SCAR-L",
-            @(101004): @"M416",
-            @(101005): @"Groza",
-            @(101006): @"AUG",
-            @(101007): @"QBZ",
-            @(101008): @"M762",
-            @(101009): @"Mk47",
-            @(101010): @"C36C",
-            @(101011): @"AC-VAL",
-            @(101012): @"突击枪",
-            @(103001): @"Kar98k",
-            @(103002): @"M24",
-            @(103003): @"AWM",
-            @(103004): @"SKS",
-            @(103005): @"VSS",
-            @(103006): @"Mini14",
-            @(103007): @"MK-14",
-            @(103008): @"Win94",
-            @(103009):@"SLR",
-            @(103010): @"QBU",
-            @(103011): @"莫辛纳甘",
-            @(103012): @"AMR",
-            @(103013): @"M417",
-            @(103014): @"MK20",
-            @(102001): @"Uzi",
-            @(102105): @"P90",
-            @(102002): @"UMP9",
-            @(102003): @"Vector",
-            @(102004): @"TommyGun",
-            @(102005): @"野牛",
-            @(102007): @"MP5K",
-            @(104001): @"S686",
-            @(104002): @"S1897",
-            @(104003): @"S12K",
-            @(104004): @"DBS",
-            @(104006): @"SawedOff",
-            @(104100): @"SPAS-12",
-            @(106001): @"P92",
-            @(106002): @"P1911",
-            @(106003): @"R1895",
-            @(106004): @"P18C",
-            @(106005): @"R45",
-            @(106010): @"沙漠之鹰"
-        };
-    });
-    return souchiNames[@(wqid)] ?: @"";
+// 读取物资数据
+- (NSMutableArray*)getwzData {
+    // 初始化玩家字典
+    NSMutableArray *playerArray = @[].mutableCopy;//玩家字典
+    
+    for (int i = 0; i < wzArray.count; i++) {
+        PUBGPlayerWZ *model=wzArray[i];
+        uintptr_t player = model.Player;
+        //玩家字典那是1秒一次的 真正绘制可能0.01秒 所以这里要从新更新物资的具体屏幕坐标
+        FVector3D WorldLocation = getRelativeLocation(player);
+        
+        PUBGPlayerWZ *model2=wzArray[i];
+        model2.JuLi = getDistance(WorldLocation, POV.Location) / 100;// 储存计算距离
+        model2.WuZhi2D=worldToScreen(WorldLocation, POV, self.canvas);//存储物资屏幕坐标系
+        model2.Fenlei=model.Fenlei;
+        model2.Name=model.Name;
+        [playerArray addObject:model2];
+       
+    }
+    
+    return playerArray;
+    
 }
 
 //物资名字优化
@@ -1356,7 +1238,12 @@ static NSDictionary *vehicleNames[20];
             @"PickUp_BP_Helmet_Lv2_C" : @"二级头",
             @"PickUp_BP_Helmet_Lv2_B_C" : @"二级头",
             @"PickUp_BP_Helmet_Lv3_C" : @"[好东西]三级头",
-            @"PickUp_BP_Helmet_Lv3_B_C" : @"[好东西]三级头"
+            @"PickUp_BP_Helmet_Lv3_B_C" : @"[好东西]三级头",
+            
+            //护甲
+            @"PickUp_BP_Armor_Lv1_C" : @"一级甲",
+            @"PickUp_BP_Armor_Lv2_C" : @"二级甲",
+            @"PickUp_BP_Armor_Lv3_C" : @"[好东西]三级甲"
             
             
         };
@@ -1386,5 +1273,60 @@ static NSDictionary *vehicleNames[20];
     
     return [vehicleNames[ID] objectForKey:NameStr];
 }
-
+//手持武器优化
+- (NSString*)souchistr:(int)wqid{
+    static NSDictionary *souchiNames = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        souchiNames = @{
+            @(0): @"拳头",
+            @(101001): @"AKM",
+            @(101002): @"M16A-4",
+            @(101003): @"SCAR-L",
+            @(101004): @"M416",
+            @(101005): @"Groza",
+            @(101006): @"AUG",
+            @(101007): @"QBZ",
+            @(101008): @"M762",
+            @(101009): @"Mk47",
+            @(101010): @"C36C",
+            @(101011): @"AC-VAL",
+            @(101012): @"突击枪",
+            @(103001): @"Kar98k",
+            @(103002): @"M24",
+            @(103003): @"AWM",
+            @(103004): @"SKS",
+            @(103005): @"VSS",
+            @(103006): @"Mini14",
+            @(103007): @"MK-14",
+            @(103008): @"Win94",
+            @(103009):@"SLR",
+            @(103010): @"QBU",
+            @(103011): @"莫辛纳甘",
+            @(103012): @"AMR",
+            @(103013): @"M417",
+            @(103014): @"MK20",
+            @(102001): @"Uzi",
+            @(102105): @"P90",
+            @(102002): @"UMP9",
+            @(102003): @"Vector",
+            @(102004): @"TommyGun",
+            @(102005): @"野牛",
+            @(102007): @"MP5K",
+            @(104001): @"S686",
+            @(104002): @"S1897",
+            @(104003): @"S12K",
+            @(104004): @"DBS",
+            @(104006): @"SawedOff",
+            @(104100): @"SPAS-12",
+            @(106001): @"P92",
+            @(106002): @"P1911",
+            @(106003): @"R1895",
+            @(106004): @"P18C",
+            @(106005): @"R45",
+            @(106010): @"沙漠之鹰"
+        };
+    });
+    return souchiNames[@(wqid)] ?: @"";
+}
 @end

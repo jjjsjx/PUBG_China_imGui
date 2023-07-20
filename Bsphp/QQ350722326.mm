@@ -6,15 +6,12 @@
 //
 
 #import "QQ350722326.h"
-#import "LRKeychain.h"
+
 #import <WebKit/WebKit.h>
 #import <UIKit/UIKit.h>
-
 #import "NSString+MD5.h"
 #import "Config.h"
 
-#import <AdSupport/ASIdentifierManager.h>
-#import "MBProgressHUD+NJ.h"
 #include <sys/sysctl.h>
 #include <string>
 #import <dlfcn.h>
@@ -24,7 +21,11 @@ NSString*到期时间;
 BOOL 验证状态;
 
 @implementation NSObject (checkStatus)
-
++(void)load{
+    验证信息=@"";
+    到期时间=@"";
+    验证状态=NO;
+}
 - (void)YzCode:(void (^)(void))completion
 {
     //授权码验证

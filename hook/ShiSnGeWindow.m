@@ -35,17 +35,6 @@ static dispatch_once_t _onceToken;
     return view;
 }
 
-+ (void)setUserInteractionEnabled:(BOOL)enabled {
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    [self setUserInteractionEnabled:enabled forView:keyWindow];
-}
-
-+ (void)setUserInteractionEnabled:(BOOL)enabled forView:(UIView *)view {
-    view.userInteractionEnabled = enabled;
-    for (UIView *subview in view.subviews) {
-        [self setUserInteractionEnabled:enabled forView:subview];
-    }
-}
 + (instancetype)sharedInstance
 {
     dispatch_once(&_onceToken, ^{
@@ -53,9 +42,5 @@ static dispatch_once_t _onceToken;
     });
     return _sharedInstance;
 }
-+ (void)removeAllSubviewsFromView:(UIView *)view {
-    for (UIView *subview in view.subviews) {
-        [subview removeFromSuperview];
-    }
-}
+
 @end
