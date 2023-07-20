@@ -1,7 +1,7 @@
 
 
 #import "YMUIWindow.h"
-
+#import "YMUIViewController.h"
 @interface YMUIWindow()
 @end
 
@@ -18,7 +18,7 @@ static dispatch_once_t _onceToken;
         [self setHidden:NO];
         [self setAlpha:1.0];
         [self setBackgroundColor:[UIColor clearColor]];
-        
+        self.rootViewController=[YMUIViewController sharedInstance];
         
     }
     return self;

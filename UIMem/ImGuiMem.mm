@@ -6,12 +6,10 @@
 #import <Foundation/Foundation.h>
 #import <shisangeIMGUI/imgui_impl_metal.h>
 #import <shisangeIMGUI/imgui.h>
-
+#import "YMUIWindow.h"
 #import "PubgLoad.h"
 #import "GameVV.h"
 #import "QQ350722326.h"
-
-#import "ShiSnGeWindow.h"
 #import "ESP.h"
 #define kWidth  [UIScreen mainScreen].bounds.size.width
 #define kHeight [UIScreen mainScreen].bounds.size.height
@@ -71,7 +69,7 @@ static int 字体大小;
     static ImGuiMem *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] initWithFrame:[ShiSnGeWindow sharedInstance].bounds];
+        sharedInstance = [[self alloc] initWithFrame:[UIScreen mainScreen].bounds];
         
     });
     return sharedInstance;
@@ -113,8 +111,7 @@ static int 字体大小;
         self.mtkView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
         self.mtkView.clipsToBounds = YES;
         self.mtkView.delegate = self;
-        self.frame=[ShiSnGeWindow sharedInstance].bounds;
-        
+
         [self.subviews.firstObject addSubview:self.mtkView];
         
         // 禁用键盘响应
@@ -165,8 +162,8 @@ static int 字体大小;
         ImGui::SetNextWindowSize(ImVec2(width, height), ImGuiCond_FirstUseEver);//大小
         
         //默认显示位置 屏幕中央
-        CGFloat x = (([ShiSnGeWindow sharedInstance].frame.size.width) - width) / 2;
-        CGFloat y = (([ShiSnGeWindow sharedInstance].frame.size.height) - height) / 2;
+        CGFloat x = ((self.frame.size.width) - width) / 2;
+        CGFloat y = ((self.frame.size.height) - height) / 2;
         
         ImGui::SetNextWindowPos(ImVec2(x, y), ImGuiCond_FirstUseEver);//默认位置
         //开始绘制==========================
@@ -193,7 +190,9 @@ static bool 全选绘制;
 - (void)Drawing:(ImDrawList*)drawList
 {
     
+    
     if(MenDeal){
+        
         
         ImGui::Begin("十三哥微信: NongShiFu123",&MenDeal);
         
@@ -461,7 +460,12 @@ static bool 全选绘制;
         ImGui::End();
         
         
+    }else{
+        [[ImGuiMem sharedInstance] removeFromSuperview];
+        [[YMUIWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
     }
+    
+    
     if (绘制总开关 && 验证状态) {
         [[ESP sharedInstance] 绘制玩家:drawList];
     }

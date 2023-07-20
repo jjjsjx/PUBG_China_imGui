@@ -11,7 +11,7 @@
 #import "GameVV.h"
 #import "PUBGDataModel.h"
 #import "PUBGTypeHeader.h"
-#import "ShiSnGeWindow.h"
+
 #include <vector>
 #include <unordered_map>
 #include <random>
@@ -131,7 +131,7 @@ static void EndGame()
     static ESP *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] initWithFrame:[ShiSnGeWindow sharedInstance].bounds];
+        sharedInstance = [[self alloc] initWithFrame:[UIScreen mainScreen].bounds];
     });
     return sharedInstance;
 }

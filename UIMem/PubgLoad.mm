@@ -51,7 +51,6 @@ bool MenDeal;
         初始音量=最新音量;
         MenDeal = !MenDeal;
         if (getGame()){
-            
             [self volumeChanged];
         }else{
             MenDeal=false;
@@ -71,7 +70,8 @@ bool MenDeal;
         [[YMUIWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
 
     }
-    [ImGuiMem sharedInstance].userInteractionEnabled = MenDeal;
+    [ImGuiMem sharedInstance].frame=[YMUIWindow sharedInstance].bounds;
+    
     [NSObject YzCode:^{
         
     }];

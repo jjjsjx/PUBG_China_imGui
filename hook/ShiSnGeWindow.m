@@ -6,7 +6,7 @@
 //
 
 #import "ShiSnGeWindow.h"
-
+#import "ShiSanGeViewController.h"
 @implementation ShiSnGeWindow
 static id _sharedInstance;
 static dispatch_once_t _onceToken;
@@ -20,7 +20,7 @@ static dispatch_once_t _onceToken;
         [self setHidden:NO];
         [self setAlpha:1.0];
         [self setBackgroundColor:[UIColor clearColor]];
-        
+        self.rootViewController=[ShiSanGeViewController sharedInstance];
     }
     return self;
 }

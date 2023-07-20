@@ -10,7 +10,6 @@
 		606630872A246FD5005BE656 /* PUBGDataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 606630852A246FD5005BE656 /* PUBGDataModel.h */; };
 		6066AC0A29F82CD0008273C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6066AC0929F82CD0008273C2 /* UIKit.framework */; };
 		6066AC0C29F82CD0008273C2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6066AC0B29F82CD0008273C2 /* Foundation.framework */; };
-		6066AC1729F82CD0008273C2 /* Ding.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6066AC1629F82CD0008273C2 /* Ding.mm */; };
 		6066AC2E29F82DBD008273C2 /* CydiaSubstrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6066AC2D29F82DBD008273C2 /* CydiaSubstrate.framework */; };
 		609570A32A27528100E12BEA /* ESP.h in Headers */ = {isa = PBXBuildFile; fileRef = 609570A12A27528100E12BEA /* ESP.h */; };
 		609570A42A27528100E12BEA /* ESP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 609570A22A27528100E12BEA /* ESP.mm */; };
@@ -82,8 +81,6 @@
 		6066AC0929F82CD0008273C2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6066AC0B29F82CD0008273C2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6066AC1229F82CD0008273C2 /* control */ = {isa = PBXFileReference; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
-		6066AC1529F82CD0008273C2 /* Ding.xm */ = {isa = PBXFileReference; lastKnownFileType = text; path = Ding.xm; sourceTree = "<group>"; };
-		6066AC1629F82CD0008273C2 /* Ding.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Ding.mm; sourceTree = "<group>"; };
 		6066AC1B29F82CD0008273C2 /* PUBG.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PUBG.plist; sourceTree = "<group>"; };
 		6066AC2D29F82DBD008273C2 /* CydiaSubstrate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CydiaSubstrate.framework; sourceTree = "<group>"; };
 		609570A12A27528100E12BEA /* ESP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESP.h; sourceTree = "<group>"; };
@@ -230,8 +227,6 @@
 				60C2FA542A6925AE00978062 /* YMUIViewController.m */,
 				60C2FA562A6925AE00978062 /* YMUIWindow.h */,
 				60C2FA512A6925AD00978062 /* YMUIWindow.m */,
-				6066AC1529F82CD0008273C2 /* Ding.xm */,
-				6066AC1629F82CD0008273C2 /* Ding.mm */,
 			);
 			path = hook;
 			sourceTree = "<group>";
@@ -474,7 +469,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				60C2FA582A6925AE00978062 /* ShiSanGeViewController.m in Sources */,
-				6066AC1729F82CD0008273C2 /* Ding.mm in Sources */,
 				60E55FAD2A21CBA70078ED9C /* QQ350722326.mm in Sources */,
 				60C2FA592A6925AE00978062 /* YMUIWindow.m in Sources */,
 				60E55F912A21CBA70078ED9C /* NSString+URLCode.m in Sources */,
