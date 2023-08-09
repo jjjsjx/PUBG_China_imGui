@@ -1,4 +1,8 @@
-
+//
+//  WX:NongShiFu123 QQ:350722326
+//  Created by 十三哥 on 2023/5/31.
+//  Git:https://github.com/nongshifu/PUBG_China_imGui
+//
 #import "ImGuiMem.h"
 #import <Metal/Metal.h>
 #import <MetalKit/MetalKit.h>
@@ -69,7 +73,7 @@ static int 字体大小;
     static ImGuiMem *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        sharedInstance = [[self alloc] initWithFrame:[YMUIWindow sharedInstance].bounds];
         
     });
     return sharedInstance;
@@ -111,6 +115,7 @@ static int 字体大小;
         self.mtkView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
         self.mtkView.clipsToBounds = YES;
         self.mtkView.delegate = self;
+        
 
         [self.subviews.firstObject addSubview:self.mtkView];
         
@@ -186,7 +191,7 @@ static int 字体大小;
 char 输入框内容[256] = "";
 static bool 全选;
 static bool 全选绘制;
-
+bool 一次调用;
 - (void)Drawing:(ImDrawList*)drawList
 {
     
@@ -195,7 +200,6 @@ static bool 全选绘制;
         
         
         ImGui::Begin("十三哥微信: NongShiFu123",&MenDeal);
-        
         ImGui::Checkbox("总开关", &绘制总开关);
         ImGui::SameLine();
         ImGui::Checkbox("附近人数", &附近人数开关);
@@ -459,12 +463,14 @@ static bool 全选绘制;
         ImGui::Text("QQ:350722326 %.1f (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
         
+        一次调用=false;
         
-    }else{
+    }
+    if (!MenDeal && !一次调用) {
         [[ImGuiMem sharedInstance] removeFromSuperview];
         [[YMUIWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
+        一次调用=true;
     }
-    
     
     if (绘制总开关 && 验证状态) {
         [[ESP sharedInstance] 绘制玩家:drawList];

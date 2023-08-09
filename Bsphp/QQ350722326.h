@@ -1,8 +1,7 @@
 //
-//  ViewController.h
-//  Radar
-//
-//  Created by 十三哥 on 2022/8/19.
+//  WX:NongShiFu123 QQ:350722326
+//  Created by 十三哥 on 2023/5/31.
+//  Git:https://github.com/nongshifu/PUBG_China_imGui
 //
 
 #import <Foundation/Foundation.h>

@@ -1,8 +1,7 @@
 //
-//  PubgLoad.m
-//  pubg
-//
-//  Created by 李良林 on 2021/2/14.
+//  WX:NongShiFu123 QQ:350722326
+//  Created by 十三哥 on 2023/5/31.
+//  Git:https://github.com/nongshifu/PUBG_China_imGui
 //
 #import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
@@ -50,6 +49,7 @@ bool MenDeal;
     if (初始音量!=最新音量) {
         初始音量=最新音量;
         MenDeal = !MenDeal;
+        //读取游戏进程 存在才显示菜单 游戏关闭则隐藏菜单
         if (getGame()){
             [self volumeChanged];
         }else{
@@ -70,8 +70,7 @@ bool MenDeal;
         [[YMUIWindow sharedInstance] addSubview:[ImGuiMem sharedInstance]];
 
     }
-    [ImGuiMem sharedInstance].frame=[YMUIWindow sharedInstance].bounds;
-    
+    //跨进程注销生效 因此需要显示菜单就验证一次 防止到期
     [NSObject YzCode:^{
         
     }];

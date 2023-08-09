@@ -1,8 +1,7 @@
 //
-//  ESP.m
-//  PUBG
-//
+//  WX:NongShiFu123 QQ:350722326
 //  Created by 十三哥 on 2023/5/31.
+//  Git:https://github.com/nongshifu/PUBG_China_imGui
 //
 #import <shisangeIMGUI/imgui_impl_metal.h>
 #import <shisangeIMGUI/imgui.h>
@@ -93,11 +92,11 @@ ImVec4 名字颜色 = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 ImVec4 背景颜色 = ImVec4(0.0f, 1.0f, 1.0f, 1.0f);
 ImVec4 物资颜色[15];
 #pragma mark - 初始化队伍颜色向量
-// 更具对标生成不同颜色
+// 根据队标生成不同颜色
 std::unordered_map<int, ImVec4> team_colors;
 static ImVec4 GetTeamColor(int team_id)
 {
-    // Check if the team color already exists in the map
+    // 检查地图中是否已存在团队颜色
     auto it = team_colors.find(team_id);
     if (it != team_colors.end()) {
         return it->second;
